@@ -75,6 +75,9 @@
     <Compile Include="Windows\SearchWindow.xaml.cs">
       <DependentUpon>SearchWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\SetTrackLyricWindow.xaml.cs">
+      <DependentUpon>SetTrackLyricWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Wrapper\AlsongLyricWrapper.cs" />
     <Compile Include="Wrapper\IITTrackWrapper.cs" />
     <Compile Include="Wrapper\ITunesWrapper.cs" />
@@ -101,6 +104,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Windows\SearchWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\SetTrackLyricWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

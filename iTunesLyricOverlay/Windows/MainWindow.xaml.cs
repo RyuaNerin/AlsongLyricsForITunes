@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -60,6 +60,11 @@ namespace iTunesLyricOverlay.Windows
         {
             this.m_searchWindow.Owner = this;
             this.m_searchWindow.Show();
+        }
+
+        private void ctlMenuSetTrackLyric_Click(object sender, RoutedEventArgs e)
+        {
+            new SetTrackLyricWindow(MainModel.Instance.CurrentTrack, MainModel.Instance.LinesGroup).ShowDialog();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using iTunesLib;
+using iTunesLib;
 
 namespace iTunesLyricOverlay.Wrapper
 {
@@ -38,5 +38,7 @@ namespace iTunesLyricOverlay.Wrapper
             {
             }
         }
+
+        public string NowPlaying => $"{this.Artist} - {this.Title}";
     }
 }

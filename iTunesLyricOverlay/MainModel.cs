@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -144,6 +144,11 @@ namespace iTunesLyricOverlay
                 lock (this.m_currentTrackLock)
                     return this.m_currentTrack;
             }
+            set
+            {
+                this.m_currentTrack = value;
+                this.OnPropertyChanged();
+            }
         }
 
         private void ITunes_ITunesDeattached()
@@ -213,12 +218,10 @@ namespace iTunesLyricOverlay
 
             lock (this.m_currentTrackLock)
             {
-                this.m_currentTrack = track;
+                this.CurrentTrack = track;
 
                 this.MusicPos = this.m_itunes.PlayerPositionMS;
                 this.MusicPosMax = track.Duration * 1000;
-
-                this.PlayingTitle = $"{track.Artist} - {track.Title}";
 
                 try
                 {

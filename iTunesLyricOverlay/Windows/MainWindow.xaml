@@ -1,4 +1,4 @@
-﻿<Window x:Class="iTunesLyricOverlay.Windows.MainWindow"
+<Window x:Class="iTunesLyricOverlay.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -65,6 +65,13 @@
                           ItemsSource="{Binding LinesGroup}"
                           HorizontalContentAlignment="Center"
                           VirtualizingStackPanel.IsVirtualizing="True">
+                <ItemsControl.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="아이튠즈 보관함에 적용"
+                                  Click="ctlMenuSetTrackLyric_Click" />
+                    </ContextMenu>
+                </ItemsControl.ContextMenu>
+                
                 <ItemsControl.Template>
                     <ControlTemplate>
                         <ScrollViewer Padding="{TemplateBinding Padding}"
@@ -126,7 +133,7 @@
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
-            <TextBlock Text="{Binding PlayingTitle, Mode=OneWay}"
+            <TextBlock Text="{Binding CurrentTrack.NowPlaying, Mode=OneWay}"
                        TextAlignment="Center"
                        Margin="0 0 3 0" />
 
