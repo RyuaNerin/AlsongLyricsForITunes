@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.645
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTunesLyricOverlay", "iTunesLyricOverlay\iTunesLyricOverlay.csproj", "{22A46DE2-B210-4C5C-A973-610DA6480EC0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{22A46DE2-B210-4C5C-A973-610DA6480EC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22A46DE2-B210-4C5C-A973-610DA6480EC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22A46DE2-B210-4C5C-A973-610DA6480EC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22A46DE2-B210-4C5C-A973-610DA6480EC0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D5F73F33-EF31-437A-9323-D8C2C0A76B14}
+	EndGlobalSection
+EndGlobal
