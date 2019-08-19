@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -80,8 +80,6 @@ xmlns:ns3=""ALSongWebServer/Service1Soap12"">
                 var checkSum = GetChecksum(filePath);
                 if (checkSum == null)
                     return null;
-
-                Console.WriteLine(checkSum);
 
                 var data = Encoding.UTF8.GetBytes($@"<?xml version=""1.0"" encoding=""UTF-8""?>
 <SOAP-ENV:Envelope

@@ -1,4 +1,3 @@
-﻿using System;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
@@ -45,10 +44,7 @@ namespace iTunesLyricOverlay.Database
                         var writer = new StreamWriter(gzip, Encoding.UTF8);
 
                         foreach (var line in this.Lyric)
-                        {
                             writer.WriteLine(line.ToString());
-                            Console.WriteLine(mem.Position);
-                        }
 
                         writer.Flush();
                     }
