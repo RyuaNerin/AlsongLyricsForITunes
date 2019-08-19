@@ -3,10 +3,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
         WindowStyle="ToolWindow"
         ResizeMode="CanResize"
-        mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
         Title="아이튠즈 보관함에 가사 적용"
         Height="400"
         Width="300">
