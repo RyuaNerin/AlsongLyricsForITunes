@@ -72,6 +72,13 @@
     </ApplicationDefinition>
     <Compile Include="Converters\ObjectCompareConverter.cs" />
     <Compile Include="Utilities\StreamReaderExt.cs" />
+    <Compile Include="Windows\NativeMethods.cs" />
+    <Compile Include="Windows\OverlayWindow.xaml.cs">
+      <DependentUpon>OverlayWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\OverlayControlWindow.xaml.cs">
+      <DependentUpon>OverlayControlWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\SearchWindow.xaml.cs">
       <DependentUpon>SearchWindow.xaml</DependentUpon>
     </Compile>
@@ -82,6 +89,10 @@
     <Compile Include="Wrapper\IITTrackWrapper.cs" />
     <Compile Include="Wrapper\ITunesWrapper.cs" />
     <Compile Include="MainModel.cs" />
+    <Page Include="Resources\WindowsIcons\WindowsPhone\xaml\appbar.cursor.move.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -103,6 +114,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Windows\OverlayWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\OverlayControlWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\SearchWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -117,6 +136,7 @@
       <SubType>Code</SubType>
     </Compile>
     <None Include="packages.config" />
+    <None Include="Resources\WindowsIcons\readme.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -132,6 +152,9 @@
       <EmbedInteropTypes>False</EmbedInteropTypes>
       <Private>True</Private>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\WindowsIcons\WindowsPhone\license.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

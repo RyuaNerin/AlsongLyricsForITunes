@@ -9,7 +9,8 @@ namespace iTunesLyricOverlay.Windows
 {
     public partial class MainWindow : Window
     {
-        private readonly SearchWindow m_searchWindow = new SearchWindow();
+        private readonly SearchWindow  m_searchWindow  = new SearchWindow();
+        private readonly OverlayWindow m_overlayWindow = new OverlayWindow();
 
         public MainWindow()
         {
@@ -23,6 +24,8 @@ namespace iTunesLyricOverlay.Windows
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             MainModel.Instance.Start();
+
+            this.m_overlayWindow.Show();
         }
 
         private void Window_Closed(object sender, EventArgs e)
