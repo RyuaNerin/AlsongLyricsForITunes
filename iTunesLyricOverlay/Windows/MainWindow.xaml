@@ -15,6 +15,9 @@
         Width="400">
     <Window.Resources>
         <ResourceDictionary>
+            <converters:ObjectCompareConverter x:Key="ObjectComparer"
+                                               OnTrue="True"
+                                               OnFalse="False" />
             <converters:LyricStateToVisibility x:Key="LyricStateToVisibility" />
         </ResourceDictionary>
     </Window.Resources>
@@ -31,29 +34,21 @@
         <Grid>
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       FontWeight="Bold">
+                       FontWeight="Bold"
+                       Text="{Binding StateString}">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock"
                            BasedOn="{StaticResource {x:Type TextBlock}}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding State}" Value="{x:Static local:LyricState.Success}">
+                            <DataTrigger Value="True">
+                                <DataTrigger.Binding>
+                                    <MultiBinding Converter="{StaticResource ObjectComparer}">
+                                        <Binding Path="State" />
+                                        <Binding Source="{x:Static local:LyricState.Success}" Mode="OneWay"/>
+                                    </MultiBinding>
+                                </DataTrigger.Binding>
+
                                 <Setter Property="Visibility" Value="Hidden" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding State}" Value="{x:Static local:LyricState.NotPlaying}">
-                                <Setter Property="Visibility" Value="Visible" />
-                                <Setter Property="Text" Value="By RyuaNerin" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding State}" Value="{x:Static local:LyricState.Searching}">
-                                <Setter Property="Visibility" Value="Visible" />
-                                <Setter Property="Text" Value="가사를 검색중입니다" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding State}" Value="{x:Static local:LyricState.NotFound}">
-                                <Setter Property="Visibility" Value="Visible" />
-                                <Setter Property="Text" Value="가사를 찾을 수 없습니다" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding State}" Value="{x:Static local:LyricState.AlsongError}">
-                                <Setter Property="Visibility" Value="Visible" />
-                                <Setter Property="Text" Value="오류가 발생하였습니다" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

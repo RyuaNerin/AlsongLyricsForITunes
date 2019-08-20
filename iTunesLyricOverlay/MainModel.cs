@@ -80,6 +80,22 @@ namespace iTunesLyricOverlay
             {
                 this.m_state = value;
                 this.OnPropertyChanged();
+                this.OnPropertyChanged("StateString");
+            }
+        }
+        public string StateString
+        {
+            get
+            {
+                switch (this.State)
+                {
+                    case LyricState.NotPlaying : return "By RyuaNerin";
+                    case LyricState.Searching  : return "가사를 검색중입니다";
+                    case LyricState.NotFound   : return "가사를 찾을 수 없습니다";
+                    case LyricState.AlsongError: return "오류가 발생하였습니다";
+                }
+
+                return null;
             }
         }
 
@@ -348,6 +364,8 @@ namespace iTunesLyricOverlay
             {
                 this.LinesGroup[0].Focused = true;
                 this.m_lastFocusedIndex = 0;
+
+                this.OnLyricsFocusChanged?.Invoke(this.LinesGroup[0]);
             }
             else
             {
