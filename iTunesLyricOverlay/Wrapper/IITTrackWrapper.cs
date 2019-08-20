@@ -15,8 +15,15 @@ namespace iTunesLyricOverlay.Wrapper
             this.Artist   = track.Artist ?? track.Composer;
             this.Title    = track.Name;
             this.Album    = track.Album;
-            this.Location = ((dynamic)track).Location as string;
             this.TrackID  = track.trackID;
+
+            try
+            {
+                this.Location = ((dynamic)track).Location as string;
+            }
+            catch
+            {
+            }
         }
 
         private readonly IITTrack m_track;
