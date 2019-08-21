@@ -58,6 +58,7 @@
             <ItemsControl x:Name="ctlItemsControl"
                           Visibility="{Binding State, Converter={StaticResource LyricStateToVisibility}, ConverterParameter={x:Static local:LyricState.Success}}"
                           ItemsSource="{Binding LinesGroup}"
+                          Focusable="False"
                           HorizontalContentAlignment="Center"
                           ScrollViewer.ScrollChanged="CtlItemsControl_ScrollChanged"
                           VirtualizingStackPanel.IsVirtualizing="True">
