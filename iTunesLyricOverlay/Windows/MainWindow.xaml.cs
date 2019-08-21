@@ -2,13 +2,16 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
 using iTunesLyricOverlay.Models;
+using iTunesLyricOverlay.Utilities;
 
 namespace iTunesLyricOverlay.Windows
 {
     public partial class MainWindow : Window
     {
+        private static readonly TimeSpan WaitAfterScroll = TimeSpan.FromSeconds(60);
+        private static readonly TimeSpan UserScrollEventExpire = TimeSpan.FromMilliseconds(100);
+
         private readonly SearchWindow  m_searchWindow  = new SearchWindow();
         private readonly OverlayWindow m_overlayWindow = new OverlayWindow();
 
@@ -45,17 +48,45 @@ namespace iTunesLyricOverlay.Windows
             MainModel.Instance.SetPlayerPosition(((LyricLineModel)((TextBlock)sender).Tag).Line.Time);
         }
 
+        private volatile bool m_userScroll = false;
+        private DateTime m_userScrollExpired = DateTime.MinValue;
+        private DateTime m_nextAutoScroll = DateTime.MaxValue;
+        private void ctlItemsControl_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            this.m_userScroll = true;
+            this.m_userScrollExpired = DateTime.Now + UserScrollEventExpire;
+        }
+
+        private void ctlItemsControl_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.m_userScroll = true;
+            this.m_userScrollExpired = DateTime.Now + UserScrollEventExpire;
+        }
+
+        private void CtlItemsControl_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (this.m_userScroll)
+            {
+                this.m_userScroll = false;
+
+                if (DateTime.Now < this.m_userScrollExpired)
+                    return;
+            }
+            
+            this.m_nextAutoScroll = DateTime.Now + WaitAfterScroll;
+        }
+
         private void LyricViewerModel_LyricsFocusChanged(LyricLineGroupModel item)
         {
-            try
+            if (DateTime.Now >= this.m_nextAutoScroll)
             {
-                var cp = this.ctlItemsControl.ItemContainerGenerator.ContainerFromItem(item) as ContentPresenter;
-
-                if (cp != null)
-                    this.Dispatcher.InvokeAsync(() => cp.BringIntoView(), DispatcherPriority.Background);
-            }
-            catch
-            {
+                try
+                {
+                    this.Dispatcher.BeginInvoke(new Action<object>(this.ctlItemsControl.ScrollToCenterOfView), item);
+                }
+                catch
+                {
+                }
             }
         }
 

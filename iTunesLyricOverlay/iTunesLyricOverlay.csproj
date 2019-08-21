@@ -71,6 +71,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\ObjectCompareConverter.cs" />
+    <Compile Include="Utilities\ItemsControlExtensions.cs" />
     <Compile Include="Utilities\StreamReaderExt.cs" />
     <Compile Include="Windows\NativeMethods.cs" />
     <Compile Include="Windows\OverlayWindow.xaml.cs">

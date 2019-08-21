@@ -59,6 +59,7 @@
                           Visibility="{Binding State, Converter={StaticResource LyricStateToVisibility}, ConverterParameter={x:Static local:LyricState.Success}}"
                           ItemsSource="{Binding LinesGroup}"
                           HorizontalContentAlignment="Center"
+                          ScrollViewer.ScrollChanged="CtlItemsControl_ScrollChanged"
                           VirtualizingStackPanel.IsVirtualizing="True">
                 <ItemsControl.ContextMenu>
                     <ContextMenu>
@@ -70,6 +71,8 @@
                 <ItemsControl.Template>
                     <ControlTemplate>
                         <ScrollViewer Padding="{TemplateBinding Padding}"
+                                      PreviewMouseWheel="ctlItemsControl_PreviewMouseWheel"
+                                      PreviewKeyDown="ctlItemsControl_PreviewKeyDown"
                                       VerticalScrollBarVisibility="Visible">
                             <ItemsPresenter />
                         </ScrollViewer>
