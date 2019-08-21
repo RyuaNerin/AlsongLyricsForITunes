@@ -8,12 +8,12 @@ namespace iTunesLyricOverlay.Wrapper
 {
     public class ITunesWrapper
     {
-        public void Start()
+        public void Init()
         {
             new Thread(this.MonitorITunes) { Priority = ThreadPriority.Lowest, IsBackground = true }.Start();
         }
 
-        public void Stop()
+        public void Deinit()
         {
             this.m_running = false;
             this.m_threadMonitor.WaitOne();

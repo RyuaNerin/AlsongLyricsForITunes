@@ -26,14 +26,14 @@ namespace iTunesLyricOverlay.Windows
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            MainModel.Instance.Start();
+            MainModel.Instance.Init();
 
             this.m_overlayWindow.Show();
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            MainModel.Instance.Stop();
+            MainModel.Instance.Deinit();
 
             this.m_searchWindow.Close();
 

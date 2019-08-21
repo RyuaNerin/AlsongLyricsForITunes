@@ -51,7 +51,7 @@ namespace iTunesLyricOverlay
         {
         }
 
-        public void Start()
+        public void Init()
         {
             new Thread(this.UpdatePlayingPos) { Priority = ThreadPriority.Lowest, IsBackground = true }.Start();
 
@@ -62,12 +62,12 @@ namespace iTunesLyricOverlay
             this.ITunes.OnPlayerPlayingTrackChangedEvent += this.ITunes_OnPlayerPlayingTrackChangedEvent;
             this.ITunes.OnPlayerStopEvent += this.ITunes_OnPlayerStopEvent;
 
-            this.ITunes.Start();
+            this.ITunes.Init();
         }
 
-        public void Stop()
+        public void Deinit()
         {
-            this.ITunes.Stop();
+            this.ITunes.Deinit();
 
             this.m_running = false;
         }
