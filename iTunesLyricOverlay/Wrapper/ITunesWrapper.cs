@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -211,6 +211,35 @@ namespace iTunesLyricOverlay.Wrapper
                         this.m_itunes.PlayerPositionMS = value;
                     }
                 }
+            }
+        }
+
+        public void NextTrack()
+        {
+            lock (this.m_itunesLock)
+            {
+                this.m_itunes?.NextTrack();
+            }
+        }
+        public void PreviousTrack()
+        {
+            lock (this.m_itunesLock)
+            {
+                this.m_itunes?.PreviousTrack();
+            }
+        }
+        public void Play()
+        {
+            lock (this.m_itunesLock)
+            {
+                this.m_itunes?.Play();
+            }
+        }
+        public void Pause()
+        {
+            lock (this.m_itunesLock)
+            {
+                this.m_itunes?.Pause();
             }
         }
     }

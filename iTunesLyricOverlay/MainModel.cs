@@ -45,7 +45,7 @@ namespace iTunesLyricOverlay
         private readonly object m_currentTrackLock = new object();
         private IITTrackWrapper m_currentTrack;
 
-        private readonly ITunesWrapper m_itunes = new ITunesWrapper();
+        public ITunesWrapper ITunes { get; } = new ITunesWrapper();
 
         private MainModel()
         {
@@ -55,19 +55,19 @@ namespace iTunesLyricOverlay
         {
             new Thread(this.UpdatePlayingPos) { Priority = ThreadPriority.Lowest, IsBackground = true }.Start();
 
-            this.m_itunes.ITunesAttached += this.ITunes_ITunesAttached;
-            this.m_itunes.ITunesDeattached += this.ITunes_ITunesDeattached;
+            this.ITunes.ITunesAttached += this.ITunes_ITunesAttached;
+            this.ITunes.ITunesDeattached += this.ITunes_ITunesDeattached;
 
-            this.m_itunes.OnPlayerPlayEvent += this.ITunes_OnPlayerPlayEvent;
-            this.m_itunes.OnPlayerPlayingTrackChangedEvent += this.ITunes_OnPlayerPlayingTrackChangedEvent;
-            this.m_itunes.OnPlayerStopEvent += this.ITunes_OnPlayerStopEvent;
+            this.ITunes.OnPlayerPlayEvent += this.ITunes_OnPlayerPlayEvent;
+            this.ITunes.OnPlayerPlayingTrackChangedEvent += this.ITunes_OnPlayerPlayingTrackChangedEvent;
+            this.ITunes.OnPlayerStopEvent += this.ITunes_OnPlayerStopEvent;
 
-            this.m_itunes.Start();
+            this.ITunes.Start();
         }
 
         public void Stop()
         {
-            this.m_itunes.Stop();
+            this.ITunes.Stop();
 
             this.m_running = false;
         }
@@ -176,9 +176,9 @@ namespace iTunesLyricOverlay
 
         private void ITunes_ITunesAttached()
         {
-            if (this.m_itunes.PlayerState == ITPlayerState.ITPlayerStatePlaying)
+            if (this.ITunes.PlayerState == ITPlayerState.ITPlayerStatePlaying)
             {
-                this.TrackChanged(this.m_itunes.CurrentTrack);
+                this.TrackChanged(this.ITunes.CurrentTrack);
             }
         }
 
@@ -214,7 +214,7 @@ namespace iTunesLyricOverlay
 
                 try
                 {
-                    this.SetTime(TimeSpan.FromMilliseconds(this.m_itunes.PlayerPositionMS));
+                    this.SetTime(TimeSpan.FromMilliseconds(this.ITunes.PlayerPositionMS));
                 }
                 catch
                 {
@@ -236,7 +236,7 @@ namespace iTunesLyricOverlay
             {
                 this.CurrentTrack = track;
 
-                this.MusicPos = this.m_itunes.PlayerPositionMS;
+                this.MusicPos = this.ITunes.PlayerPositionMS;
                 this.MusicPosMax = track.Duration * 1000;
 
                 try
@@ -375,7 +375,7 @@ namespace iTunesLyricOverlay
 
         public void SetPlayerPosition(TimeSpan ts)
         {
-            this.m_itunes.PlayerPositionMS = (int)ts.TotalMilliseconds;
+            this.ITunes.PlayerPositionMS = (int)ts.TotalMilliseconds;
             this.SetTime(ts);
         }
 

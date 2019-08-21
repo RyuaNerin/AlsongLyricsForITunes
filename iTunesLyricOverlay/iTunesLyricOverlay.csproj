@@ -90,14 +90,30 @@
     <Compile Include="Wrapper\IITTrackWrapper.cs" />
     <Compile Include="Wrapper\ITunesWrapper.cs" />
     <Compile Include="MainModel.cs" />
-    <Page Include="Resources\WindowsIcons\WindowsPhone\xaml\appbar.close.xaml">
+    <None Include="Resources\WindowsIcons\WindowsPhone\xaml\appbar.close.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\WindowsIcons\WindowsPhone\xaml\appbar.cursor.move.xaml">
+    </None>
+    <None Include="Resources\WindowsIcons\WindowsPhone\xaml\appbar.control.play.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
+    </None>
+    <None Include="Resources\WindowsIcons\WindowsPhone\xaml\appbar.control.stop.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\WindowsIcons\WindowsPhone\xaml\appbar.cursor.move.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\WindowsIcons\WindowsPhone\xaml\appbar.navigate.next.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\WindowsIcons\WindowsPhone\xaml\appbar.navigate.previous.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </None>
     <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -8,7 +8,7 @@
         xmlns:models="clr-namespace:iTunesLyricOverlay.Models"
         mc:Ignorable="d"
         x:Name="window"
-        Title="MainWindow"
+        Title="아이튠즈용 알송 가사 오버레이"
         Loaded="Window_Loaded"
         Closed="Window_Closed"
         Height="460"

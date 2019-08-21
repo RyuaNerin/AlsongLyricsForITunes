@@ -52,13 +52,7 @@ namespace iTunesLyricOverlay.Windows
             var x = (short)(lParam.ToInt32() & 0xFFFF);
             var y = (short)(lParam.ToInt32() >> 16);
             
-            if (VisualTreeHelper.HitTest(this.ctlMove, this.ctlMove.PointFromScreen(new Point(x, y))) != null)
-            {
-                handled = true;
-                return new IntPtr(NativeMethods.HTCLIENT);
-            }
-
-            if (VisualTreeHelper.HitTest(this.ctlClose, this.ctlClose.PointFromScreen(new Point(x, y))) != null)
+            if (VisualTreeHelper.HitTest(this, this.PointFromScreen(new Point(x, y))) != null)
             {
                 handled = true;
                 return new IntPtr(NativeMethods.HTCLIENT);
@@ -76,6 +70,26 @@ namespace iTunesLyricOverlay.Windows
         {
             this.ctlMove.ReleaseMouseCapture();
             this.DragMove();
+        }
+
+        private void CtlTrackPrev_Click(object sender, RoutedEventArgs e)
+        {
+            MainModel.Instance.ITunes.PreviousTrack();
+        }
+
+        private void CtlTrackNext_Click(object sender, RoutedEventArgs e)
+        {
+            MainModel.Instance.ITunes.NextTrack();
+        }
+
+        private void CtlTrackPlay_Click(object sender, RoutedEventArgs e)
+        {
+            MainModel.Instance.ITunes.Play();
+        }
+
+        private void CtlTrackStop_Click(object sender, RoutedEventArgs e)
+        {
+            MainModel.Instance.ITunes.Pause();
         }
     }
 }
