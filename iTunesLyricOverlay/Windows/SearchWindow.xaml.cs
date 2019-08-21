@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -26,15 +26,16 @@ namespace iTunesLyricOverlay.Windows
             this.ctlSearchResults.ItemsSource = this.m_searchResults;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            this.CtlClear_Click(null, null);
-        }
-
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             e.Cancel = true;
             this.Hide();
+        }
+
+        private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if ((bool)e.NewValue == true)
+                this.CtlClear_Click(null, null);
         }
 
         private IITTrackWrapper m_currentTrack;
@@ -62,6 +63,12 @@ namespace iTunesLyricOverlay.Windows
 
             this.ctlSearch.IsEnabled = true;
         }
+        
+        private void CtlSearchTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                this.CtlSearch_Click(null, null);
+        }
 
         private void CtlSearch_Click(object sender, RoutedEventArgs e)
         {
@@ -75,11 +82,16 @@ namespace iTunesLyricOverlay.Windows
             }
         }
 
+        private readonly ManualResetEventSlim m_searchLock = new ManualResetEventSlim(true);
         private CancellationTokenSource m_searchCancelToken;
         private Task m_searchTask;
 
         private void StartSearch()
         {
+            if (this.m_searchLock.IsSet)
+                return;
+            this.m_searchLock.Wait();
+
             this.ctlSearch.IsEnabled = false;
             this.m_searchResults.Clear();
 
@@ -100,9 +112,15 @@ namespace iTunesLyricOverlay.Windows
             this.ctlSearch.IsEnabled = true;
 
             this.ctlSearch.Tag = 0;
+
+            this.m_searchLock.Set();
         }
         private void StopSearch(bool wait = true)
         {
+            if (this.m_searchLock.IsSet)
+                return;
+            this.m_searchLock.Wait();
+
             this.ctlSearch.IsEnabled = false;
 
             if (wait)
@@ -116,6 +134,8 @@ namespace iTunesLyricOverlay.Windows
             this.ctlSearch.IsEnabled = true;
 
             this.ctlSearch.Tag = null;
+
+            this.m_searchLock.Set();
         }
 
         class SearchTaskArgs

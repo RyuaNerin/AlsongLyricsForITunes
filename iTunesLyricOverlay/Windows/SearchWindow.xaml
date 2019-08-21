@@ -11,7 +11,7 @@
         Title="가사 찾기"
         Height="400"
         Width="350"
-        Loaded="Window_Loaded"
+        IsVisibleChanged="Window_IsVisibleChanged"
         Closing="Window_Closing">
     <Window.Resources>
         <ResourceDictionary>
@@ -63,10 +63,9 @@
             
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Artist" HorizontalAlignment="Right" />
             <TextBlock Grid.Row="4" Grid.Column="0" Text="Title"  HorizontalAlignment="Right" />
-            
 
-            <TextBox Grid.Row="2" Grid.Column="2" x:Name="ctlSearchArtist" />
-            <TextBox Grid.Row="4" Grid.Column="2" x:Name="ctlSearchTitle"  />
+            <TextBox Grid.Row="2" Grid.Column="2" x:Name="ctlSearchArtist" KeyDown="CtlSearchTextBox_KeyDown" />
+            <TextBox Grid.Row="4" Grid.Column="2" x:Name="ctlSearchTitle"  KeyDown="CtlSearchTextBox_KeyDown" />
         </Grid>
 
         <Button Grid.Row="2"
