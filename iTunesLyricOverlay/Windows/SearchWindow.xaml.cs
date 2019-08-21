@@ -88,7 +88,7 @@ namespace iTunesLyricOverlay.Windows
 
         private void StartSearch()
         {
-            if (this.m_searchLock.IsSet)
+            if (!this.m_searchLock.IsSet)
                 return;
             this.m_searchLock.Wait();
 
@@ -117,7 +117,7 @@ namespace iTunesLyricOverlay.Windows
         }
         private void StopSearch(bool wait = true)
         {
-            if (this.m_searchLock.IsSet)
+            if (!this.m_searchLock.IsSet)
                 return;
             this.m_searchLock.Wait();
 
