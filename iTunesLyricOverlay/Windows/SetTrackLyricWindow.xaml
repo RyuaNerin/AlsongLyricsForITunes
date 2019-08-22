@@ -19,7 +19,8 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="ctlNowPlaying" />
+        <TextBlock x:Name="ctlNowPlaying"
+                   TextAlignment="Center"/>
 
         <GroupBox Grid.Row="1"
                   Header="가사 형식 지정"
