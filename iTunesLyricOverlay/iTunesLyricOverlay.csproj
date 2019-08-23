@@ -70,6 +70,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BoolToObjectConverter.cs" />
     <Compile Include="Converters\ObjectCompareConverter.cs" />
     <Compile Include="Utilities\ItemsControlExtensions.cs" />
     <Compile Include="Utilities\StreamReaderExt.cs" />
