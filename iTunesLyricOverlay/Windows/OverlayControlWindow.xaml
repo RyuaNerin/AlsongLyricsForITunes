@@ -14,10 +14,10 @@
         SizeToContent="WidthAndHeight"
         Loaded="Window_Loaded"
         Closing="Window_Closing">
-    <StackPanel Margin="0 5 5 0"
+    <StackPanel Margin="0 0 5 5"
                 Width="Auto"
                 HorizontalAlignment="Right"
-                VerticalAlignment="Top"
+                VerticalAlignment="Bottom"
                 Orientation="Horizontal">
         <StackPanel.Resources>
             <DataTemplate x:Key="baseTemplate">
