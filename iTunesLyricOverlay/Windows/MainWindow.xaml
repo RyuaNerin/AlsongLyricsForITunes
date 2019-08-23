@@ -24,6 +24,7 @@
     
     <Grid Margin="3">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
             <RowDefinition />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
@@ -31,7 +32,13 @@
 
         <!-- ==================================================================================================== -->
 
-        <Grid>
+        <Button Grid.Row="0"
+                Content="오버레이 표시"
+                Padding="5"
+                Margin="0 0 0 5"
+                Click="ctlOpenOverlay_Click" />
+
+        <Grid Grid.Row="1">
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        FontWeight="Bold"
@@ -125,7 +132,7 @@
 
         <!-- ==================================================================================================== -->
 
-        <Grid Grid.Row="1"
+        <Grid Grid.Row="2"
               Margin="0 3 0 3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
@@ -173,7 +180,7 @@
 
         <!-- ==================================================================================================== -->
 
-        <Button Grid.Row="2"
+        <Button Grid.Row="3"
                 Content="가사 검색"
                 Click="CtlSearchLyrics_Click" />
     </Grid>

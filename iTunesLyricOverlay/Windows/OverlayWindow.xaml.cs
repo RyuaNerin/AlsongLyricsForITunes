@@ -23,10 +23,11 @@ namespace iTunesLyricOverlay.Windows
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            this.m_control.Owner = this;
+
             this.m_control.Left = this.Left + this.Width - this.m_control.Width;
             this.m_control.Top  = this.Top - this.m_control.Height;
 
-            this.m_control.Owner = this;
             this.m_control.Show();
         }
 
@@ -34,6 +35,14 @@ namespace iTunesLyricOverlay.Windows
         {
             e.Cancel = true;
             this.Hide();
+        }
+
+        private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if ((bool)e.NewValue)
+            {
+                this.m_control?.Show();
+            }
         }
 
         private void Control_LocationChanged(object sender, EventArgs e)

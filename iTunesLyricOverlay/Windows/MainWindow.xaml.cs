@@ -100,5 +100,10 @@ namespace iTunesLyricOverlay.Windows
         {
             new SetTrackLyricWindow(MainModel.Instance.CurrentTrack, MainModel.Instance.LinesGroup).ShowDialog();
         }
+
+        private void ctlOpenOverlay_Click(object sender, RoutedEventArgs e)
+        {
+            this.m_overlayWindow.Show();
+        }
     }
 }

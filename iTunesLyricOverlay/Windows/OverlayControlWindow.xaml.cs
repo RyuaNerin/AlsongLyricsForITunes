@@ -17,8 +17,12 @@ namespace iTunesLyricOverlay.Windows
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Left = this.Owner.Left + this.Owner.Width - this.Width;
-            this.Top = this.Owner.Top;
+            var owner = this.Owner;
+            if (owner != null)
+            {
+                this.Left = this.Owner.Left + this.Owner.Width - this.Width;
+                this.Top = this.Owner.Top;
+            }
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
