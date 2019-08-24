@@ -4,6 +4,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="clr-namespace:iTunesLyricOverlay.Models"
+        xmlns:converters="clr-namespace:iTunesLyricOverlay.Converters"
+        xmlns:local="clr-namespace:iTunesLyricOverlay"
         mc:Ignorable="d"
         ShowInTaskbar="False"
         AllowsTransparency="True"
@@ -11,12 +13,28 @@
         ResizeMode="NoResize"
         Background="Transparent"
         Topmost="True"
+        Opacity="{Binding Overlay_Opacity, Source={x:Static local:Config.Instance}, Mode=OneWay}"
         Width="400"
         Height="100"
         IsVisibleChanged="Window_IsVisibleChanged"
         Loaded="Window_Loaded"
         Closing="Window_Closing">
-    <Border CornerRadius="10" Background="#55AAAAAA">
+    <Window.Resources>
+        <converters:ColorToBrushConverter x:Key="ColorToBrush" />
+        
+        <converters:BoolToObjectConverter x:Key="ItalicConverter"
+                                          WhenTrue="{x:Static FontStyles.Italic}"
+                                          WhenFalse="{x:Static FontStyles.Normal}" />
+        
+        <converters:BoolToObjectConverter x:Key="BoldConverter"
+                                          WhenTrue="{x:Static FontWeights.Bold}"
+                                          WhenFalse="{x:Static FontWeights.Normal}" />
+        
+        <converters:FontFamilyConverter x:Key="FontFamilyConverter" />
+    </Window.Resources>
+    
+    <Border CornerRadius="10"
+            Background="{Binding Overlay_Background, Source={x:Static local:Config.Instance}, Converter={StaticResource ColorToBrush}}">
         <Grid Margin="5">
             <ItemsControl x:Name="ctlLyric"
                           HorizontalAlignment="Stretch"
@@ -28,9 +46,12 @@
                         <Viewbox Stretch="Uniform"
                                  StretchDirection="DownOnly">
                             <TextBlock Text="{Binding Line.Text}"
-                                       FontSize="16"
+                                       FontSize="{Binding Overlay_FontSize, Source={x:Static local:Config.Instance}, Mode=OneWay}"
+                                       FontStyle="{Binding Overlay_FontItalic, Source={x:Static local:Config.Instance}, Converter={StaticResource ItalicConverter}, Mode=OneWay}"
+                                       FontWeight="{Binding Overlay_FontBold, Source={x:Static local:Config.Instance}, Converter={StaticResource BoldConverter}, Mode=OneWay}"
+                                       FontFamily="{Binding Overlay_FontFamily, Source={x:Static local:Config.Instance}, Converter={StaticResource FontFamilyConverter}, Mode=OneWay}"
+                                       Foreground="{Binding Overlay_FontColor, Source={x:Static local:Config.Instance}, Converter={StaticResource ColorToBrush}, Mode=OneWay}"
                                        TextAlignment="Center"
-                                       Foreground="White"
                                        TextWrapping="NoWrap"
                                        HorizontalAlignment="Center" />
                         </Viewbox>

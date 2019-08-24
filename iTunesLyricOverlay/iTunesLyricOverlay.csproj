@@ -70,10 +70,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Config.cs" />
     <Compile Include="Converters\BoolToObjectConverter.cs" />
+    <Compile Include="Converters\ColorToBrushConverter.cs" />
+    <Compile Include="Converters\FontFamilyConverter.cs" />
     <Compile Include="Converters\ObjectCompareConverter.cs" />
+    <Compile Include="Models\LyricLineGroupCollection.cs" />
     <Compile Include="Utilities\ItemsControlExtensions.cs" />
-    <Compile Include="Utilities\StreamReaderExt.cs" />
+    <Compile Include="Utilities\LineReader.cs" />
     <Compile Include="Windows\NativeMethods.cs" />
     <Compile Include="Windows\OverlayWindow.xaml.cs">
       <DependentUpon>OverlayWindow.xaml</DependentUpon>

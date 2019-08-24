@@ -9,7 +9,7 @@ namespace iTunesLyricOverlay.Windows
 {
     public partial class MainWindow : Window
     {
-        private static readonly TimeSpan WaitAfterScroll = TimeSpan.FromSeconds(60);
+        private static readonly TimeSpan WaitAfterScroll = TimeSpan.FromSeconds(10);
         private static readonly TimeSpan UserScrollEventExpire = TimeSpan.FromMilliseconds(100);
 
         private readonly SearchWindow  m_searchWindow  = new SearchWindow();
@@ -78,6 +78,9 @@ namespace iTunesLyricOverlay.Windows
 
         private void LyricViewerModel_LyricsFocusChanged(LyricLineGroupModel item)
         {
+            if (Config.Instance.MainWindow_AutoScroll == false)
+                return;
+
             if (DateTime.Now >= this.m_nextAutoScroll)
             {
                 try

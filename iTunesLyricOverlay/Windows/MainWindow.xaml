@@ -14,12 +14,27 @@
         Height="460"
         Width="400">
     <Window.Resources>
-        <ResourceDictionary>
-            <converters:ObjectCompareConverter x:Key="ObjectComparer"
-                                               OnTrue="True"
-                                               OnFalse="False" />
-            <converters:LyricStateToVisibility x:Key="LyricStateToVisibility" />
-        </ResourceDictionary>
+        <converters:ObjectCompareConverter x:Key="ObjectComparer"
+                                           OnTrue="True"
+                                           OnFalse="False" />
+        
+        <converters:LyricStateToVisibility x:Key="LyricStateToVisibility" />
+        
+        <converters:ColorToBrushConverter x:Key="ColorToBrush" />
+        
+        <converters:BoolToObjectConverter x:Key="ItalicConverter"
+                                          WhenTrue="{x:Static FontStyles.Italic}"
+                                          WhenFalse="{x:Static FontStyles.Normal}" />
+        
+        <converters:BoolToObjectConverter x:Key="BoldConverter"
+                                          WhenTrue="{x:Static FontWeights.Bold}"
+                                          WhenFalse="{x:Static FontWeights.Normal}" />
+        
+        <converters:FontFamilyConverter x:Key="FontFamilyConverter" />
+
+        <converters:BoolToObjectConverter x:Key="BooleanInverter"
+                                          WhenTrue="False"
+                                          WhenFalse="True" />
     </Window.Resources>
     
     <Grid Margin="3">
@@ -41,7 +56,11 @@
         <Grid Grid.Row="1">
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       FontWeight="Bold"
+                       FontSize="{Binding MainWindow_FontSizeFocused, Source={x:Static local:Config.Instance}, Mode=OneWay}"
+                       FontFamily="{Binding MainWindow_FontFamily, Source={x:Static local:Config.Instance}, Converter={StaticResource FontFamilyConverter}, Mode=OneWay}"
+                       FontStyle="{Binding MainWindow_FontItalicFocused, Source={x:Static local:Config.Instance}, Converter={StaticResource ItalicConverter}, Mode=OneWay}"
+                       FontWeight="{Binding MainWindow_FontBoldFocused, Source={x:Static local:Config.Instance}, Converter={StaticResource BoldConverter}, Mode=OneWay}"
+                       Foreground="{Binding MainWindow_FontColorFocused, Source={x:Static local:Config.Instance}, Converter={StaticResource ColorToBrush}, Mode=OneWay}"
                        Text="{Binding StateString}">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock"
@@ -71,6 +90,12 @@
                           VirtualizingStackPanel.IsVirtualizing="True">
                 <ItemsControl.ContextMenu>
                     <ContextMenu>
+                        <MenuItem Header="자동 스크롤"
+                                  IsCheckable="True"
+                                  IsChecked="{Binding MainWindow_AutoScroll, Source={x:Static local:Config.Instance}}" />
+
+                        <Separator />
+                        
                         <MenuItem Header="아이튠즈 보관함에 적용"
                                   Click="ctlMenuSetTrackLyric_Click" />
                     </ContextMenu>
@@ -103,8 +128,12 @@
                                 <DataTemplate DataType="{x:Type models:LyricLineModel}">
                                     <TextBlock x:Name="PART_TEXTBLOCK"
                                                Text="{Binding Line.Text}"
+                                               FontSize="{Binding MainWindow_FontSize, Source={x:Static local:Config.Instance}, Mode=OneWay}"
+                                               FontFamily="{Binding MainWindow_FontFamily, Source={x:Static local:Config.Instance}, Converter={StaticResource FontFamilyConverter}, Mode=OneWay}"
+                                               FontStyle="{Binding MainWindow_FontItalic, Source={x:Static local:Config.Instance}, Converter={StaticResource ItalicConverter}, Mode=OneWay}"
+                                               FontWeight="{Binding MainWindow_FontBold, Source={x:Static local:Config.Instance}, Converter={StaticResource BoldConverter}, Mode=OneWay}"
+                                               Foreground="{Binding MainWindow_FontColor, Source={x:Static local:Config.Instance}, Converter={StaticResource ColorToBrush}, Mode=OneWay}"
                                                TextAlignment="Center"
-                                               Foreground="Gray"
                                                TextWrapping="Wrap"
                                                HorizontalAlignment="Center"
                                                Tag="{Binding}"
@@ -116,10 +145,16 @@
                                                      Value="True">
                                             <Setter TargetName="PART_TEXTBLOCK"
                                                     Property="FontWeight"
-                                                    Value="Bold" />
+                                                    Value="{Binding MainWindow_FontBoldFocused, Source={x:Static local:Config.Instance}, Converter={StaticResource ItalicConverter}, Mode=OneWay}" />
+                                            <Setter TargetName="PART_TEXTBLOCK"
+                                                    Property="FontStyle"
+                                                    Value="{Binding MainWindow_FontItalicFocused, Source={x:Static local:Config.Instance}, Converter={StaticResource ItalicConverter}, Mode=OneWay}" />
+                                            <Setter TargetName="PART_TEXTBLOCK"
+                                                    Property="FontWeight"
+                                                    Value="{Binding MainWindow_FontBoldFocused, Source={x:Static local:Config.Instance}, Converter={StaticResource BoldConverter}, Mode=OneWay}" />
                                             <Setter TargetName="PART_TEXTBLOCK"
                                                     Property="Foreground"
-                                                    Value="Black" />
+                                                    Value="{Binding MainWindow_FontColorFocused, Source={x:Static local:Config.Instance}, Converter={StaticResource ColorToBrush}, Mode=OneWay}" />
                                         </DataTrigger>
                                     </DataTemplate.Triggers>
                                 </DataTemplate>

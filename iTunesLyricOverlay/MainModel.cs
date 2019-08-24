@@ -1,14 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using iTunesLib;
 using iTunesLyricOverlay.Alsong;
 using iTunesLyricOverlay.Database;
 using iTunesLyricOverlay.Models;
 using iTunesLyricOverlay.Wrapper;
-using iTunesLib;
 
 namespace iTunesLyricOverlay
 {
@@ -131,8 +130,8 @@ namespace iTunesLyricOverlay
             }
         }
 
-        private LyricLineGroupModel[] m_linesGroup;
-        public LyricLineGroupModel[] LinesGroup
+        private LyricLineGroupCollection m_linesGroup;
+        public LyricLineGroupCollection LinesGroup
         {
             get => this.m_linesGroup;
             private set
@@ -311,65 +310,75 @@ namespace iTunesLyricOverlay
         private int m_lastFocusedIndex = -1;
         private void SetLyrics(AlsongLyricLine[] lyric)
         {
-            if (lyric == null)
+            lock (this.m_currentTrackLock)
             {
-                this.State = LyricState.NotFound;
-                this.LinesGroup = null;
-                return;
-            }
-
-            this.State = LyricState.Success;
-
-            //////////////////////////////////////////////////
-
-            var groups = new List<LyricLineGroupModel>();
-            LyricLineGroupModel g = null;
-
-            foreach (var line in lyric)
-            {
-                if (g == null || g.Time != line.Time)
+                if (lyric == null)
                 {
-                    if (g != null)
-                        groups.Add(g);
-
-                    g = new LyricLineGroupModel(line.Time);
+                    this.State = LyricState.NotFound;
+                    this.LinesGroup = null;
+                    return;
                 }
 
-                g.Add(new LyricLineModel(line));
-            }
-            if (g.Count > 0)
-                groups.Add(g);
+                this.State = LyricState.Success;
 
-            if (groups.Count == 1)
-            {
-                groups.Clear();
-                groups.AddRange(lyric.Select(e => new LyricLineGroupModel(e.Time, e)).ToArray());
-            }
-            else
-            {
-                for (int i = 1; i < groups.Count - 1; ++i)
+                //////////////////////////////////////////////////
+
+                var groups = new LyricLineGroupCollection();
+                LyricLineGroupModel g = null;
+
+                foreach (var line in lyric)
                 {
-                    if (groups[i].Time == TimeSpan.Zero)
+                    if (g == null || g.Time != line.Time)
                     {
-                        groups[i].Time = groups[i + 1].Time;
+                        if (g != null)
+                            groups.Add(g);
+
+                        g = new LyricLineGroupModel(line.Time);
+                    }
+
+                    g.Add(new LyricLineModel(line));
+                }
+                if (g.Count > 0)
+                    groups.Add(g);
+
+                if (groups.Count == 1)
+                {
+                    groups.Clear();
+                    groups.AddRange(lyric.Select(e => new LyricLineGroupModel(e.Time, e)).ToArray());
+                }
+                else
+                {
+                    for (int i = 1; i < groups.Count - 1; ++i)
+                    {
+                        if (groups[i].Time == TimeSpan.Zero)
+                        {
+                            groups[i].Time = groups[i + 1].Time;
+                        }
                     }
                 }
-            }
 
-            this.LinesGroup = groups.ToArray();
+                this.LinesGroup = groups;
 
-            //////////////////////////////////////////////////
+                //////////////////////////////////////////////////
 
-            if (this.LinesGroup.Length > 0)
-            {
-                this.LinesGroup[0].Focused = true;
-                this.m_lastFocusedIndex = 0;
+                if (this.LinesGroup.Count > 0)
+                {
+                    this.LinesGroup[0].Focused = true;
+                    this.m_lastFocusedIndex = 0;
 
-                this.OnLyricsFocusChanged?.Invoke(this.LinesGroup[0]);
-            }
-            else
-            {
-                this.m_lastFocusedIndex = -1;
+                    this.OnLyricsFocusChanged?.Invoke(this.LinesGroup[0]);
+                }
+                else
+                {
+                    this.m_lastFocusedIndex = -1;
+                }
+
+                if (Config.Instance.ApplyLyricsToITunes)
+                {
+                    var lyricStr = groups.Format(Config.Instance.ApplyLyricsToITunes_WithTime, Config.Instance.ApplyLyricsToITunes_WithBlankLine);
+
+                    this.m_currentTrack.SetLyrics(lyricStr);
+                }
             }
         }
 
@@ -387,7 +396,7 @@ namespace iTunesLyricOverlay
                 return;
 
             int index = 0;
-            while (index + 1 < this.LinesGroup.Length)
+            while (index + 1 < this.LinesGroup.Count)
             {
                 if (pos < this.LinesGroup[index + 1].Time)
                     break;

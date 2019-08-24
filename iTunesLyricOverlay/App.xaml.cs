@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Reflection;
 using System.Windows;
 using iTunesLyricOverlay.Database;
@@ -13,9 +13,14 @@ namespace iTunesLyricOverlay
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            var asm = Assembly.GetExecutingAssembly();
+
             CrashReport.Init();
 
-            m_database = new LiteDatabase(Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location) + ".db");
+            m_database = new LiteDatabase(Path.GetFileNameWithoutExtension(asm.Location) + ".db");
+            m_database.Engine.UserVersion = 0;
+
+            Config.Load(m_database);
 
             LyricCollection = m_database.GetCollection<LyricArchive>("lyrics");
             LyricCollection.EnsureIndex(le => le.TrackID);
@@ -23,6 +28,8 @@ namespace iTunesLyricOverlay
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
+            Config.Save();
+
             m_database.Shrink();
             m_database.Dispose();
         }

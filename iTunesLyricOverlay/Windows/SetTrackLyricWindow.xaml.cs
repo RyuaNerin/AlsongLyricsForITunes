@@ -8,12 +8,12 @@ namespace iTunesLyricOverlay.Windows
 {
     public partial class SetTrackLyricWindow : Window
     {
-        private readonly LyricLineGroupModel[]  m_lyricGroup;
-        private readonly IITTrackWrapper        m_track;
+        private readonly LyricLineGroupCollection   m_lyricGroup;
+        private readonly IITTrackWrapper            m_track;
 
         private string m_lyric;
 
-        public SetTrackLyricWindow(IITTrackWrapper track, LyricLineGroupModel[] lyric)
+        public SetTrackLyricWindow(IITTrackWrapper track, LyricLineGroupCollection lyric)
         {
             this.InitializeComponent();
 
@@ -35,40 +35,10 @@ namespace iTunesLyricOverlay.Windows
             var showTime     = this.ctlLyricShowTime.IsChecked ?? false;
             var addBlankLine = this.ctlLyricBlankLine.IsChecked ?? false;
 
-            var sb = new StringBuilder(4096);
-            var lst = new List<string>();
+            var lyric = this.m_lyricGroup.Format(showTime, addBlankLine, out var lines);
 
-            for (int i = 0; i < this.m_lyricGroup.Length; ++i)
-            {
-                var isMultiLine = this.m_lyricGroup[i].Count > 1;
-
-                if (showTime)
-                {
-                    lst.Add($"[{this.m_lyricGroup[i].TimeStr}]");
-                    sb.AppendLine($"[{this.m_lyricGroup[i].TimeStr}]");
-                }
-
-                foreach (var line in this.m_lyricGroup[i])
-                {
-                    if (!isMultiLine || !string.IsNullOrWhiteSpace(line.Line.Text))
-                    {
-                        lst.Add(line.Line.Text);
-                        sb.AppendLine(line.Line.Text);
-                    }
-                }
-
-                if (addBlankLine)
-                {
-                    if (i + 1 < this.m_lyricGroup.Length)
-                    {
-                        lst.Add("");
-                        sb.AppendLine();
-                    }
-                }
-            }
-
-            this.ctlPreview.ItemsSource = lst;
-            this.m_lyric = sb.ToString();
+            this.ctlPreview.ItemsSource = lines;
+            this.m_lyric = lyric; 
         }
 
         private void ctlApply_Click(object sender, RoutedEventArgs e)

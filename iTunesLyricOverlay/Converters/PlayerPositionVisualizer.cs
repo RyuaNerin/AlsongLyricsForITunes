@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Windows.Data;
 
@@ -14,6 +14,6 @@ namespace iTunesLyricOverlay.Converters
             return string.Format("{0:00}:{1:00} / {2:00}:{3:00}", cur / 60, cur % 60, max / 60, max % 60);
         }
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-            => null;
+            => throw new NotImplementedException();
     }
 }
