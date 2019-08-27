@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace iTunesLyricOverlay.Windows
+namespace iTunesLyricOverlay
 {
     internal static class NativeMethods
     {
