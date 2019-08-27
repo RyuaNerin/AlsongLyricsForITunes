@@ -187,13 +187,13 @@
                                                      Value="True">
                                             <Setter TargetName="PART_TEXTBLOCK"
                                                     Property="FontSize"
-                                                    Value="{Binding MainWindow_FontSizeFocused, Source={x:Static local:Config.Instance}, Converter={StaticResource ItalicConverter}, Mode=OneWay}" />
+                                                    Value="{Binding MainWindow_FontSizeFocused, Source={x:Static local:Config.Instance}, Mode=OneWay}" />
                                             <Setter TargetName="PART_TEXTBLOCK"
                                                     Property="FontStyle"
                                                     Value="{Binding MainWindow_FontItalicFocused, Source={x:Static local:Config.Instance}, Converter={StaticResource ItalicConverter}, Mode=OneWay}" />
                                             <Setter TargetName="PART_TEXTBLOCK"
                                                     Property="FontWeight"
-                                                    Value="{Binding MainWindow_FontBoldFocused, Source={x:Static local:Config.Instance}, Converter={StaticResource ItalicConverter}, Mode=OneWay}" />
+                                                    Value="{Binding MainWindow_FontBoldFocused, Source={x:Static local:Config.Instance}, Converter={StaticResource BoldConverter}, Mode=OneWay}" />
                                             <Setter TargetName="PART_TEXTBLOCK"
                                                     Property="Foreground"
                                                     Value="{Binding MainWindow_FontColorFocused, Source={x:Static local:Config.Instance}, Converter={StaticResource ColorToBrush}, Mode=OneWay}" />
