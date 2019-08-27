@@ -48,7 +48,8 @@ namespace iTunesLyricOverlay.Windows
         
         private void Control_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            this.Control_LocationChanged(null, null);
+            this.m_control.Left = this.Left + this.Width - this.m_control.Width;
+            this.m_control.Top = this.Top - this.m_control.Height;
         }
         private void Control_LocationChanged(object sender, EventArgs e)
         {
