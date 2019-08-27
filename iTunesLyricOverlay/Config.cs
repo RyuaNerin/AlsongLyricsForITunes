@@ -12,10 +12,6 @@ namespace iTunesLyricOverlay
     {
         public static Config Instance { get; } = new Config();
 
-        private Config()
-        {
-        }
-
         private readonly static PropertyInfo[] Properties;
         static Config()
         {
@@ -113,6 +109,21 @@ namespace iTunesLyricOverlay
         private void OnPropertyChanged([CallerMemberName] string name = "")
             => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
+        public Config Clone()
+        {
+            var newConfig = new Config();
+
+            foreach (var prop in Properties)
+                prop.SetValue(newConfig, prop.GetValue(this));
+
+            return newConfig;
+        }
+        public void CopyFrom(Config config)
+        {
+            foreach (var prop in Properties)
+                prop.SetValue(this, prop.GetValue(config));
+        }
+
         #region Apply Lyrics To iTunes
 
         private bool m_applyLyricsToITunes;
@@ -163,6 +174,17 @@ namespace iTunesLyricOverlay
             }
         }
 
+        private bool m_overlayControl_TrackControlVisible = true;
+        public bool OverlayControl_TrackControlVisible
+        {
+            get => this.m_overlayControl_TrackControlVisible;
+            set
+            {
+                this.m_overlayControl_TrackControlVisible = value;
+                this.OnPropertyChanged();
+            }
+        }
+
         private double m_overlayControl_Opacity = 1d;
         public double OverlayControl_Opacity
         {
@@ -188,17 +210,6 @@ namespace iTunesLyricOverlay
         #endregion
 
         #region Overlay
-
-        private bool m_overlay_visible = true;
-        public bool Overlay_Visible
-        {
-            get => this.m_overlay_visible;
-            set
-            {
-                this.m_overlay_visible = true;
-                this.OnPropertyChanged();
-            }
-        }
 
         private double m_overlay_Opacity = 1d;
         public double Overlay_Opacity

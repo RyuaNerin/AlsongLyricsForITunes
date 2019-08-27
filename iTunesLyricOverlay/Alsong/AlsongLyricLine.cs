@@ -13,13 +13,21 @@ namespace iTunesLyricOverlay.Alsong
         }
 
         private static readonly Regex ReLine = new Regex(@"^\[(\d\d:\d\d.\d\d)\](.*)$", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+        public static TimeSpan ParseTime(string time)
+        {
+            if (TimeSpan.TryParseExact(time, @"mm\:ss\.ff", CultureInfo.CurrentCulture, out var result))
+                return result;
+
+            return TimeSpan.ParseExact(time, @"\[mm\:ss\.ff\]", CultureInfo.CurrentCulture);
+        }
+
         public AlsongLyricLine(string data)
         {
             var m = ReLine.Match(data);
 
             try
             {
-                this.Time = TimeSpan.ParseExact(m.Groups[1].Value, @"mm\:ss\.ff", CultureInfo.CurrentCulture);
+                this.Time = ParseTime(m.Groups[1].Value);
                 this.Text = m.Groups[2].Value.Trim();
             }
             catch

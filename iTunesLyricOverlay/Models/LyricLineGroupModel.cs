@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -13,15 +13,15 @@ namespace iTunesLyricOverlay.Models
         {
             this.Time = time;
         }
-        public LyricLineGroupModel(TimeSpan time, AlsongLyricLine line)
+        public LyricLineGroupModel(AlsongLyricLine line)
         {
-            this.Time = time;
+            this.Time = line.Time;
 
             this.Add(new LyricLineModel(line));
         }
-        public LyricLineGroupModel(TimeSpan time, IEnumerable<AlsongLyricLine> lines)
+        public LyricLineGroupModel(IEnumerable<AlsongLyricLine> lines)
         {
-            this.Time = time;
+            this.Time = lines.First().Time;
 
             this.AddRange(lines.Select(e => new LyricLineModel(e)));
         }

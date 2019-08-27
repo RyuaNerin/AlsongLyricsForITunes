@@ -17,6 +17,7 @@ namespace iTunesLyricOverlay.Windows
 
             this.m_control = new OverlayControlWindow();
             this.m_control.LocationChanged += this.Control_LocationChanged;
+            this.m_control.SizeChanged += this.Control_SizeChanged;
 
             MainModel.Instance.OnLyricsFocusChanged += this.MainModel_OnLyricsFocusChanged;
         }
@@ -44,7 +45,11 @@ namespace iTunesLyricOverlay.Windows
                 this.m_control?.Show();
             }
         }
-
+        
+        private void Control_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            this.Control_LocationChanged(null, null);
+        }
         private void Control_LocationChanged(object sender, EventArgs e)
         {
             this.Left = this.m_control.Left + this.m_control.Width  - this.Width;

@@ -344,7 +344,7 @@ namespace iTunesLyricOverlay
                 if (groups.Count == 1)
                 {
                     groups.Clear();
-                    groups.AddRange(lyric.Select(e => new LyricLineGroupModel(e.Time, e)).ToArray());
+                    groups.AddRange(lyric.Select(e => new LyricLineGroupModel(e)).ToArray());
                 }
                 else
                 {

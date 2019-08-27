@@ -36,14 +36,15 @@
             </Setter>
         </Style>
     </Window.Resources>
-
+    
     <StackPanel Margin="0 0 5 5"
                 Width="Auto"
                 Height="{Binding OverlayControl_Size, Source={x:Static local:Config.Instance}, Mode=OneWay}"
+                Visibility="{Binding OverlayControl_Visible, Source={x:Static local:Config.Instance}, Converter={StaticResource TrueToVisible}, Mode=OneWay}"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
                 Orientation="Horizontal">
-        <StackPanel Visibility="{Binding OverlayControl_Visible, Source={x:Static local:Config.Instance}, Converter={StaticResource TrueToVisible}}"
+        <StackPanel Visibility="{Binding OverlayControl_TrackControlVisible, Source={x:Static local:Config.Instance}, Converter={StaticResource TrueToVisible}, Mode=OneWay}"
                     Orientation="Horizontal">
             <StackPanel x:Name="ctlControls"
                     Grid.Column="0"
