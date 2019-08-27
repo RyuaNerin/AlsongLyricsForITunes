@@ -54,6 +54,17 @@ namespace iTunesLyricOverlay.Windows
             this.ctlMainWindowLyricPreview.Text = MainWindowLyricExample.Format(this.m_config.ApplyLyricsToITunes_WithTime, this.m_config.ApplyLyricsToITunes_WithBlankLine).TrimEnd('\r', '\n');
         }
 
+        private void CtlRealtimeUpdate_Checked(object sender, RoutedEventArgs e)
+        {
+            this.DataContext = Config.Instance;
+        }
+
+        private void CtlRealtimeUpdate_Unchecked(object sender, RoutedEventArgs e)
+        {
+            this.m_config.CopyFrom(Config.Instance);
+            this.DataContext = this.m_config;
+        }
+
         private void ctlOk_Click(object sender, RoutedEventArgs e)
         {
             Config.Instance.CopyFrom(this.m_config);

@@ -35,6 +35,8 @@
         <converters:DoubleMultiplier x:Key="DoubleMultiplier100"
                                      Multiply="100" />
 
+        <converters:BooleanRevertConverter x:Key="BooleanRevertConverter" />
+
         <Style TargetType="GroupBox"
                BasedOn="{StaticResource {x:Type GroupBox}}">
             <Setter Property="Padding" Value="3" />
@@ -65,12 +67,23 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
             <RowDefinition />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <ListBox Grid.Column="0"
+        <CheckBox Grid.Row="0"
+                  Grid.ColumnSpan="2"
+                  x:Name="ctlRealtimeUpdate"
+                  Content="실시간 업데이트"
+                  Margin="0 0 0 3"
+                  Checked="CtlRealtimeUpdate_Checked"
+                  Unchecked="CtlRealtimeUpdate_Unchecked" />
+
+        <ListBox Grid.Row="1"
+                 Grid.Column="0"
                  x:Name="ctlCategory"
+                 Focusable="False"
                  SelectionMode="Single"
                  SelectedIndex="0"
                  Margin="0 0 5 0">
@@ -79,7 +92,8 @@
             <ListBoxItem>오버레이</ListBoxItem>
         </ListBox>
 
-        <ScrollViewer Grid.Column="1"
+        <ScrollViewer Grid.Row="1"
+                      Grid.Column="1"
                       Visibility="{Binding ElementName=ctlCategory, Path=SelectedIndex, Converter={StaticResource IntValueParamterComparer}, ConverterParameter=0}">
             <StackPanel>
                 <GroupBox Header="자동으로 아이튠즈에 가사 적용">
@@ -138,7 +152,8 @@
             </StackPanel>
         </ScrollViewer>
 
-        <ScrollViewer Grid.Column="1"
+        <ScrollViewer Grid.Row="1"
+                      Grid.Column="1"
                       Visibility="{Binding ElementName=ctlCategory, Path=SelectedIndex, Converter={StaticResource IntValueParamterComparer}, ConverterParameter=1}">
             <StackPanel>
                 <GroupBox Header="가사 표시">
@@ -274,8 +289,9 @@
                 </GroupBox>
             </StackPanel>
         </ScrollViewer>
-        
-        <ScrollViewer Grid.Column="1"
+
+        <ScrollViewer Grid.Row="1"
+                      Grid.Column="1"
                       Visibility="{Binding ElementName=ctlCategory, Path=SelectedIndex, Converter={StaticResource IntValueParamterComparer}, ConverterParameter=2}">
             <StackPanel>
                 <GroupBox Header="오버레이 리모컨">
@@ -379,8 +395,8 @@
                 </GroupBox>
             </StackPanel>
         </ScrollViewer>
-
-        <StackPanel Grid.Row="1"
+        
+        <StackPanel Grid.Row="2"
                     Grid.ColumnSpan="2"
                     HorizontalAlignment="Right"
                     Margin="0 5 0 0"
@@ -394,9 +410,11 @@
             </StackPanel.Resources>
 
             <Button Content="적용"
+                    IsEnabled="{Binding ElementName=ctlRealtimeUpdate, Path=IsChecked, Converter={StaticResource BooleanRevertConverter}}"
                     Click="ctlApply_Click" />
 
             <Button Content="되돌리기"
+                    IsEnabled="{Binding ElementName=ctlRealtimeUpdate, Path=IsChecked, Converter={StaticResource BooleanRevertConverter}}"
                     Click="ctlReset_Click" />
 
             <Button Content="닫기"
