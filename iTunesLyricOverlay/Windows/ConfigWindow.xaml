@@ -107,6 +107,7 @@
                             <StackPanel>
                                 <CheckBox Content="시간 표시"
                                           Margin="0 0 0 3"
+                                          x:Name="ctlApplyLyricsToITunes_WithTime"
                                           IsEnabled="{Binding ApplyLyricsToITunes, Mode=OneWay}"
                                           IsChecked="{Binding ApplyLyricsToITunes_WithTime}"
                                           Checked="ctlMainWindowLyricsOption_IsCheckedChanged"
@@ -114,6 +115,7 @@
 
                                 <CheckBox Content="빈 줄로 구분"
                                           Margin="0 0 0 5"
+                                          x:Name="ctlApplyLyricsToITunes_WithBlankLine"
                                           IsEnabled="{Binding ApplyLyricsToITunes, Mode=OneWay}"
                                           IsChecked="{Binding ApplyLyricsToITunes_WithBlankLine}"
                                           Checked="ctlMainWindowLyricsOption_IsCheckedChanged"

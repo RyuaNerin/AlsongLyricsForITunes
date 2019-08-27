@@ -51,7 +51,7 @@ namespace iTunesLyricOverlay.Windows
 
         private void ctlMainWindowLyricsOption_IsCheckedChanged(object sender, RoutedEventArgs e)
         {
-            this.ctlMainWindowLyricPreview.Text = MainWindowLyricExample.Format(this.m_config.ApplyLyricsToITunes_WithTime, this.m_config.ApplyLyricsToITunes_WithBlankLine).TrimEnd('\r', '\n');
+            this.ctlMainWindowLyricPreview.Text = MainWindowLyricExample.Format(this.ctlApplyLyricsToITunes_WithTime.IsChecked ?? false, this.ctlApplyLyricsToITunes_WithBlankLine.IsChecked ?? false).TrimEnd('\r', '\n');
         }
 
         private void CtlRealtimeUpdate_Checked(object sender, RoutedEventArgs e)
