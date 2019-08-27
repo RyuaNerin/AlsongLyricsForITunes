@@ -209,6 +209,54 @@ namespace iTunesLyricOverlay
 
         #endregion
 
+        #region Overlay Location
+
+        public double m_overlay_Left = 100;
+        public double Overlay_Left
+        {
+            get => this.m_overlay_Left;
+            set
+            {
+                this.m_overlay_Left = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public double m_overlay_Top = 100;
+        public double Overlay_Top
+        {
+            get => this.m_overlay_Top;
+            set
+            {
+                this.m_overlay_Top = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public double m_overlay_Width = 400;
+        public double Overlay_Width
+        {
+            get => this.m_overlay_Width;
+            set
+            {
+                this.m_overlay_Width = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public double m_overlay_Height = 100;
+        public double Overlay_Height
+        {
+            get => this.m_overlay_Height;
+            set
+            {
+                this.m_overlay_Height = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
         #region Overlay
 
         private double m_overlay_Opacity = 1d;

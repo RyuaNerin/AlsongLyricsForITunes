@@ -329,7 +329,7 @@
                 <GroupBox Header="오버레이 형태 설정">
                     <StackPanel>
                         <TextBlock Margin="0 0 0 3"
-                                   Text="{Binding ElementName=ctlOverlayOpacity, Path=Value, StringFormat=오버레이 리모컨 투명도 : {0:##0} %}" />
+                                   Text="{Binding ElementName=ctlOverlayOpacity, Path=Value, StringFormat=오버레이 투명도 : {0:##0} %}" />
 
                         <Slider x:Name="ctlOverlayOpacity"
                                 Minimum="0"
@@ -343,6 +343,24 @@
                         <xctk:ColorPicker UsingAlphaChannel="True"
                                           Margin="0 0 0 3"
                                           SelectedColor="{Binding Overlay_Background}" />
+
+                        <TextBlock Margin="0 0 0 3"
+                                   Text="{Binding ElementName=ctlOverlayWidth, Path=Value, StringFormat=오버레이 폭 : {0}}" />
+
+                        <Slider x:Name="ctlOverlayWidth"
+                                Minimum="50"
+                                Maximum="500"
+                                Margin="0 0 0 5"
+                                Value="{Binding Overlay_Width}" />
+
+                        <TextBlock Margin="0 0 0 3"
+                                   Text="{Binding ElementName=ctlOverlayHeight, Path=Value, StringFormat=오버레이 높이 : {0}}" />
+
+                        <Slider x:Name="ctlOverlayHeight"
+                                Minimum="10"
+                                Maximum="300"
+                                Margin="0 0 0 5"
+                                Value="{Binding Overlay_Height}" />
                     </StackPanel>
                 </GroupBox>
 
