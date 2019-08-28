@@ -119,17 +119,6 @@ namespace iTunesLyricOverlay
             }
         }
 
-        private string m_playingTitle;
-        public string PlayingTitle
-        {
-            get => this.m_playingTitle;
-            private set
-            {
-                this.m_playingTitle = value;
-                this.OnPropertyChanged();
-            }
-        }
-
         private LyricLineGroupCollection m_linesGroup;
         public LyricLineGroupCollection LinesGroup
         {
