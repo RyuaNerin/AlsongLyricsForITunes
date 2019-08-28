@@ -49,20 +49,8 @@
         <Grid Grid.Row="0"
               Margin="0 0 0 5">
             <Grid.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="Width" Value="32" />
-                    <Setter Property="Height" Value="32" />
-                    <Setter Property="Margin" Value="0 0 5 0" />
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate>
-                                <Viewbox Margin="-5">
-                                    <ContentPresenter Content="{Binding}" />
-                                </Viewbox>
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
+                <Style TargetType="Button"
+                       BasedOn="{StaticResource CanvasButton}" />
             </Grid.Resources>
 
             <Grid.ColumnDefinitions>
@@ -129,7 +117,7 @@
                           Focusable="False"
                           HorizontalContentAlignment="Center"
                           ScrollViewer.ScrollChanged="CtlItemsControl_ScrollChanged"
-                          VirtualizingStackPanel.IsVirtualizing="True">
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ItemsControl.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="자동 스크롤"
@@ -153,12 +141,6 @@
                         </ScrollViewer>
                     </ControlTemplate>
                 </ItemsControl.Template>
-
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type models:LyricLineGroupModel}">
