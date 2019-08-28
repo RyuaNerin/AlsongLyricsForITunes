@@ -19,7 +19,6 @@
         Left="{Binding Overlay_Left, Source={x:Static local:Config.Instance}, Mode=TwoWay}"
         Width="{Binding Overlay_Width, Source={x:Static local:Config.Instance}, Mode=TwoWay}"
         Height="{Binding Overlay_Height, Source={x:Static local:Config.Instance}, Mode=TwoWay}"
-        IsVisibleChanged="Window_IsVisibleChanged"
         SizeChanged="Window_SizeChanged"
         Loaded="Window_Loaded"
         Closing="Window_Closing">

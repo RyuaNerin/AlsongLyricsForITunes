@@ -38,12 +38,10 @@ namespace iTunesLyricOverlay.Windows
             this.Hide();
         }
 
-        private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        public new void Show()
         {
-            if ((bool)e.NewValue)
-            {
-                this.m_control?.Show();
-            }
+            base.Show();
+            this.m_control?.Show();
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)

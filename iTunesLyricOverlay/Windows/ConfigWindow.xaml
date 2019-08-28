@@ -13,7 +13,6 @@
         Title="설정"
         Height="450"
         Width="400"
-        IsVisibleChanged="Window_IsVisibleChanged"
         Closing="Window_Closing">
     <Window.Resources>
         <converters:IntValueParamterComparer x:Key="IntValueParamterComparer"

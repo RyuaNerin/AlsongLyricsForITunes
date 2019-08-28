@@ -32,10 +32,10 @@ namespace iTunesLyricOverlay.Windows
             this.Hide();
         }
 
-        private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        public new void Show()
         {
-            if ((bool)e.NewValue == true)
-                this.CtlClear_Click(null, null);
+            this.CtlClear_Click(null, null);
+            base.Show();
         }
 
         private IITTrackWrapper m_currentTrack;

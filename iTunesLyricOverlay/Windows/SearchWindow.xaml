@@ -11,7 +11,6 @@
         Title="가사 찾기"
         Height="400"
         Width="350"
-        IsVisibleChanged="Window_IsVisibleChanged"
         Closing="Window_Closing">
     <Window.Resources>
         <ResourceDictionary>

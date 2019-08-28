@@ -33,14 +33,13 @@ namespace iTunesLyricOverlay.Windows
             this.DataContext = this.m_config;
         }
 
-        private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        public new void Show()
         {
-            if ((bool)e.NewValue)
-            {
-                this.m_config.CopyFrom(Config.Instance);
+            this.m_config.CopyFrom(Config.Instance);
 
-                this.ctlMainWindowLyricsOption_IsCheckedChanged(null, null);
-            }
+            this.ctlMainWindowLyricsOption_IsCheckedChanged(null, null);
+
+            base.Show();
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
