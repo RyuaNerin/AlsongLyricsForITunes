@@ -94,14 +94,15 @@
     <Compile Include="Converters\ObjectCompareConverter.cs" />
     <Compile Include="Converters\IntValueParamterComparer.cs" />
     <Compile Include="Models\LyricLineGroupCollection.cs" />
+    <Compile Include="Utilities\GridViewSorter.cs" />
     <Compile Include="Utilities\ItemsControlExtensions.cs" />
     <Compile Include="Utilities\LineReader.cs" />
     <Compile Include="Windows\ConfigWindow.xaml.cs">
       <DependentUpon>ConfigWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="NativeMethods.cs" />
-    <Compile Include="Windows\LyricCacheWindow.xaml.cs">
-      <DependentUpon>LyricCacheWindow.xaml</DependentUpon>
+    <Compile Include="Windows\LyricCachedWindow.xaml.cs">
+      <DependentUpon>LyricCachedWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\OverlayWindow.xaml.cs">
       <DependentUpon>OverlayWindow.xaml</DependentUpon>
@@ -147,7 +148,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\LyricCacheWindow.xaml">
+    <Page Include="Windows\LyricCachedWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

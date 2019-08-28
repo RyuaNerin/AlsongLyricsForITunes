@@ -15,6 +15,7 @@ namespace iTunesLyricOverlay.Windows
         private readonly SearchWindow  m_searchWindow  = new SearchWindow();
         private readonly OverlayWindow m_overlayWindow = new OverlayWindow();
         private readonly ConfigWindow  m_configWindow = new ConfigWindow();
+        private readonly LyricCachedWindow m_lyricCachedWindow = new LyricCachedWindow();
 
         public MainWindow()
         {
@@ -113,6 +114,11 @@ namespace iTunesLyricOverlay.Windows
         private void ctlOpenConfig_Click(object sender, RoutedEventArgs e)
         {
             this.m_configWindow.Show();
+        }
+
+        private void ctlOpenLyricCache_Click(object sender, RoutedEventArgs e)
+        {
+            this.m_lyricCachedWindow.Show();
         }
     }
 }

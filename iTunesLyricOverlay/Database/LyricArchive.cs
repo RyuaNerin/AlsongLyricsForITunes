@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
@@ -17,21 +18,43 @@ namespace iTunesLyricOverlay.Database
         }
         public LyricArchive(IITTrackWrapper track)
         {
-            this.TrackID = GetID(track);
+            this.LyricCacheId  = GetID(track);
+
+            this.Artist   = track.Artist;
+            this.Title    = track.Title;
+            this.Album    = track.Album;
+            this.Duration = track.Duration;
+
+            this.Cached   = DateTime.Now;
         }
 
-        [BsonId]
-        [BsonField("id")]
-        public string               TrackID { get; set; }
+        [BsonIgnore]
+        public bool IsInvalid
+            => string.IsNullOrWhiteSpace(this.LyricCacheId) ||
+               string.IsNullOrWhiteSpace(this.Artist) ||
+               string.IsNullOrWhiteSpace(this.Title) ||
+               string.IsNullOrWhiteSpace(this.Album) ||
+               this.Duration == 0 ||
+               this.Cached == default(DateTime) ||
+               this.Lyric == null || this.Lyric.Length == 0;
 
-        [BsonField("lyric_id")]
-        public string               LyricID { get; set; }
+        [BsonId]
+        public string   LyricCacheId    { get; set; }
+
+        public string   Artist          { get; set; }
+        public string   Title           { get; set; }
+        public string   Album           { get; set; }
+        public int      Duration        { get; set; }
+        public DateTime Cached          { get; set; }
+
+        public string   LyricID         { get; set; }
+
+        [BsonIgnore] public string DurationStr  => string.Format("{0:#0}:{1:00}", this.Duration / 60, this.Duration % 60);
+        [BsonIgnore] public string CachedStr    => this.Cached.ToString("yyyy-MM-dd HH:mm:ss");
 
         [BsonIgnore]
-        public AlsongLyricLine[]    Lyric   { get; set; }
-
-        [BsonField("lyric")]
-        public byte[] LyricCompressed
+        public AlsongLyricLine[]    Lyric { get; set; }
+        public byte[]               LyricCompressed
         {
             get
             {

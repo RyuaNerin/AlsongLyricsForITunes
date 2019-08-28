@@ -1,4 +1,6 @@
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 using iTunesLyricOverlay.Database;
@@ -23,7 +25,13 @@ namespace iTunesLyricOverlay
             Config.Load(m_database);
 
             LyricCollection = m_database.GetCollection<LyricArchive>("lyrics");
-            LyricCollection.EnsureIndex(le => le.TrackID);
+            LyricCollection.EnsureIndex(le => le.LyricCacheId);
+
+            foreach (var itemInvaild in LyricCollection.FindAll().Where(le => le.IsInvalid).ToArray())
+            {
+                Debug.WriteLine($"Invaild : {itemInvaild.LyricCacheId}");
+                LyricCollection.Delete(itemInvaild.LyricCacheId);
+            }
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)
