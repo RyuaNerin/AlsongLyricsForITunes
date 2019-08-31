@@ -18,7 +18,8 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0"
+              Margin="0 0 0 5">
             <Grid.Resources>
                 <Style TargetType="TextBlock"
                        BasedOn="{StaticResource {x:Type TextBlock}}">
@@ -59,37 +60,41 @@
             <TextBlock Grid.Row="6" Grid.Column="2" x:Name="ctlDuration" />
         </Grid>
 
-        <ItemsControl Grid.Row="1"
-                      x:Name="ctlItemsControl"
-                      Focusable="False"
-                      HorizontalContentAlignment="Center"
-                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ItemsControl.Template>
-                <ControlTemplate>
-                    <ScrollViewer Padding="{TemplateBinding Padding}"
-                                  VerticalScrollBarVisibility="Visible">
-                        <ItemsPresenter />
-                    </ScrollViewer>
-                </ControlTemplate>
-            </ItemsControl.Template>
+        <Border Grid.Row="1"
+                BorderBrush="Gray"
+                BorderThickness="1">
+            <ItemsControl 
+                          x:Name="ctlItemsControl"
+                          Focusable="False"
+                          HorizontalContentAlignment="Center"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ItemsControl.Template>
+                    <ControlTemplate>
+                        <ScrollViewer Padding="{TemplateBinding Padding}"
+                                      VerticalScrollBarVisibility="Visible">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </ItemsControl.Template>
             
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type models:LyricLineGroupModel}">
-                    <ItemsControl ItemsSource="{Binding}"
-                                  ToolTip="{Binding TimeStr}"
-                                  HorizontalContentAlignment="Center"
-                                  Margin="0 0 0 10">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type models:LyricLineModel}">
-                                <TextBlock TextAlignment="Center"
-                                           TextWrapping="Wrap"
-                                           HorizontalAlignment="Center"
-                                           Text="{Binding Line.Text}" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type models:LyricLineGroupModel}">
+                        <ItemsControl ItemsSource="{Binding}"
+                                      ToolTip="{Binding TimeStr}"
+                                      HorizontalContentAlignment="Center"
+                                      Margin="0 0 0 10">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type models:LyricLineModel}">
+                                    <TextBlock TextAlignment="Center"
+                                               TextWrapping="Wrap"
+                                               HorizontalAlignment="Center"
+                                               Text="{Binding Line.Text}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Border>
     </Grid>
 </Window>
