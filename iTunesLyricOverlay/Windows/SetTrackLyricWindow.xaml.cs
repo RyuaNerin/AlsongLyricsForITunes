@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using iTunesLyricOverlay.Models;
 using iTunesLyricOverlay.Wrapper;
