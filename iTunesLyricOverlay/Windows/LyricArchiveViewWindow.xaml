@@ -1,0 +1,95 @@
+<Window x:Class="iTunesLyricOverlay.Windows.LyricArchiveViewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="clr-namespace:iTunesLyricOverlay.Models"
+        mc:Ignorable="d"
+        ShowInTaskbar="False"
+        WindowStyle="ToolWindow"
+        ResizeMode="CanResize"
+        WindowStartupLocation="CenterOwner"
+        Title="가사 미리보기"
+        Height="450"
+        Width="350">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="0">
+            <Grid.Resources>
+                <Style TargetType="TextBlock"
+                       BasedOn="{StaticResource {x:Type TextBlock}}">
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    <Setter Property="VerticalAlignment"   Value="Center" />
+                    <Setter Property="TextWrapping"        Value="NoWrap" />
+                    <Setter Property="TextTrimming"        Value="CharacterEllipsis" />
+                    <Setter Property="Margin"              Value="0" />
+                </Style>
+            </Grid.Resources>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="작곡가" />
+            <TextBlock Grid.Row="0" Grid.Column="2" x:Name="ctlArtist" />
+            
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="제목" />
+            <TextBlock Grid.Row="2" Grid.Column="2" x:Name="ctlTitle" />
+
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="앨범" />
+            <TextBlock Grid.Row="4" Grid.Column="2" x:Name="ctlAlbum" />
+
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="노래 길이" />
+            <TextBlock Grid.Row="6" Grid.Column="2" x:Name="ctlDuration" />
+        </Grid>
+
+        <ItemsControl Grid.Row="1"
+                      x:Name="ctlItemsControl"
+                      Focusable="False"
+                      HorizontalContentAlignment="Center"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <ScrollViewer Padding="{TemplateBinding Padding}"
+                                  VerticalScrollBarVisibility="Visible">
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+            
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type models:LyricLineGroupModel}">
+                    <ItemsControl ItemsSource="{Binding}"
+                                  ToolTip="{Binding TimeStr}"
+                                  HorizontalContentAlignment="Center"
+                                  Margin="0 0 0 10">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type models:LyricLineModel}">
+                                <TextBlock TextAlignment="Center"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Center"
+                                           Text="{Binding Line.Text}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</Window>

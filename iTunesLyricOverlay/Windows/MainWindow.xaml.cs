@@ -15,7 +15,7 @@ namespace iTunesLyricOverlay.Windows
         private readonly SearchWindow  m_searchWindow  = new SearchWindow();
         private readonly OverlayWindow m_overlayWindow = new OverlayWindow();
         private readonly ConfigWindow  m_configWindow = new ConfigWindow();
-        private readonly LyricCachedWindow m_lyricCachedWindow = new LyricCachedWindow();
+        private readonly LyricArchiveWindow m_lyricCachedWindow = new LyricArchiveWindow();
 
         public MainWindow()
         {

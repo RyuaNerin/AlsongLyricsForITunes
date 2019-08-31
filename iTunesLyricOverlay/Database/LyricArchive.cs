@@ -18,7 +18,7 @@ namespace iTunesLyricOverlay.Database
         }
         public LyricArchive(IITTrackWrapper track)
         {
-            this.LyricCacheId  = GetID(track);
+            this.LyricArchiveId  = GetID(track);
 
             this.Artist   = track.Artist;
             this.Title    = track.Title;
@@ -30,7 +30,7 @@ namespace iTunesLyricOverlay.Database
 
         [BsonIgnore]
         public bool IsInvalid
-            => string.IsNullOrWhiteSpace(this.LyricCacheId) ||
+            => string.IsNullOrWhiteSpace(this.LyricArchiveId) ||
                string.IsNullOrWhiteSpace(this.Artist) ||
                string.IsNullOrWhiteSpace(this.Title) ||
                string.IsNullOrWhiteSpace(this.Album) ||
@@ -39,7 +39,7 @@ namespace iTunesLyricOverlay.Database
                this.Lyric == null || this.Lyric.Length == 0;
 
         [BsonId]
-        public string   LyricCacheId    { get; set; }
+        public string   LyricArchiveId  { get; set; }
 
         public string   Artist          { get; set; }
         public string   Title           { get; set; }

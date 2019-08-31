@@ -25,12 +25,12 @@ namespace iTunesLyricOverlay
             Config.Load(m_database);
 
             LyricCollection = m_database.GetCollection<LyricArchive>("lyrics");
-            LyricCollection.EnsureIndex(le => le.LyricCacheId);
+            LyricCollection.EnsureIndex(le => le.LyricArchiveId);
 
             foreach (var itemInvaild in LyricCollection.FindAll().Where(le => le.IsInvalid).ToArray())
             {
-                Debug.WriteLine($"Invaild : {itemInvaild.LyricCacheId}");
-                LyricCollection.Delete(itemInvaild.LyricCacheId);
+                Debug.WriteLine($"Invaild : {itemInvaild.LyricArchiveId}");
+                LyricCollection.Delete(itemInvaild.LyricArchiveId);
             }
         }
 

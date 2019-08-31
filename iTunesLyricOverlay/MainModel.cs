@@ -311,42 +311,8 @@ namespace iTunesLyricOverlay
                 this.State = LyricState.Success;
 
                 //////////////////////////////////////////////////
-
-                var groups = new LyricLineGroupCollection();
-                LyricLineGroupModel g = null;
-
-                foreach (var line in lyric)
-                {
-                    if (g == null || g.Time != line.Time)
-                    {
-                        if (g != null)
-                            groups.Add(g);
-
-                        g = new LyricLineGroupModel(line.Time);
-                    }
-
-                    g.Add(new LyricLineModel(line));
-                }
-                if (g.Count > 0)
-                    groups.Add(g);
-
-                if (groups.Count == 1)
-                {
-                    groups.Clear();
-                    groups.AddRange(lyric.Select(e => new LyricLineGroupModel(e)).ToArray());
-                }
-                else
-                {
-                    for (int i = 1; i < groups.Count - 1; ++i)
-                    {
-                        if (groups[i].Time == TimeSpan.Zero)
-                        {
-                            groups[i].Time = groups[i + 1].Time;
-                        }
-                    }
-                }
-
-                this.LinesGroup = groups;
+                
+                this.LinesGroup = new LyricLineGroupCollection(lyric);
 
                 //////////////////////////////////////////////////
 
@@ -364,7 +330,7 @@ namespace iTunesLyricOverlay
 
                 if (Config.Instance.ApplyLyricsToITunes)
                 {
-                    var lyricStr = groups.Format(Config.Instance.ApplyLyricsToITunes_WithTime, Config.Instance.ApplyLyricsToITunes_WithBlankLine);
+                    var lyricStr = this.LinesGroup.Format(Config.Instance.ApplyLyricsToITunes_WithTime, Config.Instance.ApplyLyricsToITunes_WithBlankLine);
 
                     this.m_currentTrack.SetLyrics(lyricStr);
                 }

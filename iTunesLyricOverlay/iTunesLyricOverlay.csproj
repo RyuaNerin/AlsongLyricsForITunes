@@ -101,8 +101,12 @@
       <DependentUpon>ConfigWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="NativeMethods.cs" />
-    <Compile Include="Windows\LyricCachedWindow.xaml.cs">
-      <DependentUpon>LyricCachedWindow.xaml</DependentUpon>
+    <Compile Include="Windows\Extended\RoutedUICommandExt.cs" />
+    <Compile Include="Windows\LyricArchiveViewWindow.xaml.cs">
+      <DependentUpon>LyricArchiveViewWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\LyricArchiveWindow.xaml.cs">
+      <DependentUpon>LyricArchiveWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\OverlayWindow.xaml.cs">
       <DependentUpon>OverlayWindow.xaml</DependentUpon>
@@ -148,7 +152,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\LyricCachedWindow.xaml">
+    <Page Include="Windows\LyricArchiveViewWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\LyricArchiveWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

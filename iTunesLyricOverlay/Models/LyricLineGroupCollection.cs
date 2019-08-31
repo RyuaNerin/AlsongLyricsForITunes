@@ -1,10 +1,55 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using iTunesLyricOverlay.Alsong;
 
 namespace iTunesLyricOverlay.Models
 {
     public class LyricLineGroupCollection : List<LyricLineGroupModel>
     {
+        public LyricLineGroupCollection()
+        {
+        }
+        public LyricLineGroupCollection(AlsongLyricLine[] lyric)
+        {
+            var groups = new LyricLineGroupCollection();
+            LyricLineGroupModel g = null;
+
+            foreach (var line in lyric)
+            {
+                if (g == null || g.Time != line.Time)
+                {
+                    if (g != null)
+                        groups.Add(g);
+
+                    g = new LyricLineGroupModel(line.Time);
+                }
+
+                g.Add(new LyricLineModel(line));
+            }
+            if (g.Count > 0)
+                groups.Add(g);
+
+            if (groups.Count == 1)
+            {
+                groups.Clear();
+                groups.AddRange(lyric.Select(e => new LyricLineGroupModel(e)).ToArray());
+            }
+            else
+            {
+                for (int i = 1; i < groups.Count - 1; ++i)
+                {
+                    if (groups[i].Time == TimeSpan.Zero)
+                    {
+                        groups[i].Time = groups[i + 1].Time;
+                    }
+                }
+            }
+
+            this.AddRange(groups);
+        }
+
         public string Format(bool showTime, bool addBlankLine)
         {
             return this.Format(showTime, addBlankLine, out var lines);
