@@ -63,8 +63,7 @@
         <Border Grid.Row="1"
                 BorderBrush="Gray"
                 BorderThickness="1">
-            <ItemsControl 
-                          x:Name="ctlItemsControl"
+            <ItemsControl x:Name="ctlItemsControl"
                           Focusable="False"
                           HorizontalContentAlignment="Center"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled">
