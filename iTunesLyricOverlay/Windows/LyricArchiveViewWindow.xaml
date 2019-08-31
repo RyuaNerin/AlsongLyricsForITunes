@@ -4,6 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="clr-namespace:iTunesLyricOverlay.Models"
+        xmlns:extended="clr-namespace:iTunesLyricOverlay.Windows.Extended"
         mc:Ignorable="d"
         ShowInTaskbar="False"
         WindowStyle="ToolWindow"
@@ -12,6 +13,11 @@
         Title="가사 미리보기"
         Height="450"
         Width="350">
+    <Window.InputBindings>
+        <extended:WindowCloseKeyBinding CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, 
+                           AncestorType={x:Type Window}}}" />
+    </Window.InputBindings>
+    
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />

@@ -84,5 +84,10 @@ namespace iTunesLyricOverlay.Windows
         {
             this.Close();
         }
+
+        private void CommandBinding_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+
+        }
     }
 }

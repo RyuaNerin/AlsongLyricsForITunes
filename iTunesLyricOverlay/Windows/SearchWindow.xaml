@@ -4,6 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:iTunesLyricOverlay.Converters"
+        xmlns:extended="clr-namespace:iTunesLyricOverlay.Windows.Extended"
         mc:Ignorable="d"
         WindowStyle="ToolWindow"
         ResizeMode="CanResize"
@@ -12,6 +13,11 @@
         Height="400"
         Width="350"
         Closing="Window_Closing">
+    <Window.InputBindings>
+        <extended:WindowCloseKeyBinding CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, 
+                           AncestorType={x:Type Window}}}" />
+    </Window.InputBindings>
+    
     <Window.Resources>
         <ResourceDictionary>
             <converters:ObjectCompareConverter x:Key="SameToTrue"

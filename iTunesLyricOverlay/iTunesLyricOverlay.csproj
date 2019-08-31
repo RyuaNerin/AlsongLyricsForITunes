@@ -101,6 +101,8 @@
       <DependentUpon>ConfigWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="NativeMethods.cs" />
+    <Compile Include="Windows\Extended\WindowCloseKeyBinding.cs" />
+    <Compile Include="Windows\Extended\RelayCommand.cs" />
     <Compile Include="Windows\Extended\RoutedUICommandExt.cs" />
     <Compile Include="Windows\LyricArchiveViewWindow.xaml.cs">
       <DependentUpon>LyricArchiveViewWindow.xaml</DependentUpon>

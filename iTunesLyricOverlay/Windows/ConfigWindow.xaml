@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:converters="clr-namespace:iTunesLyricOverlay.Converters"
+        xmlns:extended="clr-namespace:iTunesLyricOverlay.Windows.Extended"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False"
@@ -57,6 +58,11 @@
             <Setter Property="ColorMode" Value="ColorPalette" />
         </Style>
     </Window.Resources>
+
+    <Window.InputBindings>
+        <extended:WindowCloseKeyBinding CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, 
+                           AncestorType={x:Type Window}}}" />
+    </Window.InputBindings>
     
     <Grid Margin="5">
         <Grid.ColumnDefinitions>

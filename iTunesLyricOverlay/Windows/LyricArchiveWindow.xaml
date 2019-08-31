@@ -10,6 +10,11 @@
         Height="500"
         Width="350"
         Closing="Window_Closing">
+    <Window.InputBindings>
+        <extended:WindowCloseKeyBinding CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, 
+                           AncestorType={x:Type Window}}}" />
+    </Window.InputBindings>
+    
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
