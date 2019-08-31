@@ -121,7 +121,7 @@
 
                                 <TextBlock Text="미리보기"/>
 
-                                <Border BorderBrush="Gray"
+                                <Border BorderBrush="{x:Static SystemColors.ActiveBorderBrush}"
                                         Margin="5"
                                         BorderThickness="1"
                                         Height="150">
@@ -225,7 +225,7 @@
                                           Margin="0 0 0 3"
                                           IsChecked="{Binding MainWindow_FontItalic}"/>
 
-                                <Border BorderBrush="Gray"
+                                <Border BorderBrush="{x:Static SystemColors.ActiveBorderBrush}"
                                         BorderThickness="1"
                                         Height="40">
                                     <TextBlock Text="미리 보기"
@@ -271,7 +271,7 @@
                                           Margin="0 0 0 3"
                                           IsChecked="{Binding MainWindow_FontItalicFocused}"/>
 
-                                <Border BorderBrush="Gray"
+                                <Border BorderBrush="{x:Static SystemColors.ActiveBorderBrush}"
                                         BorderThickness="1"
                                         Height="40">
                                     <TextBlock Text="미리 보기"
@@ -396,7 +396,7 @@
                                   Margin="0 0 0 3"
                                   IsChecked="{Binding Overlay_FontItalic}"/>
 
-                        <Border BorderBrush="Gray"
+                        <Border BorderBrush="{x:Static SystemColors.ActiveBorderBrush}"
                                 BorderThickness="1"
                                 Background="{Binding Overlay_Background, Converter={StaticResource ColorToBrush}, Mode=OneWay}"
                                 Height="60">

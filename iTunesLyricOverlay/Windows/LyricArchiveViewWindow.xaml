@@ -61,7 +61,7 @@
         </Grid>
 
         <Border Grid.Row="1"
-                BorderBrush="Gray"
+                BorderBrush="{x:Static SystemColors.ActiveBorderBrush}"
                 BorderThickness="1">
             <ItemsControl x:Name="ctlItemsControl"
                           Focusable="False"
