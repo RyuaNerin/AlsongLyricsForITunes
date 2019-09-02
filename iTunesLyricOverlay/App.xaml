@@ -38,7 +38,8 @@
             </Setter>
         </Style>
 
-        <Style TargetType="ItemsControl">
+        <Style x:Key="ItemsControlWithVirtualizingStackPanel"
+               TargetType="ItemsControl">
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility"   Value="Visible" />
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
             <Setter Property="VirtualizingStackPanel.IsVirtualizing"      Value="True" />
@@ -49,6 +50,17 @@
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel />
                     </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <ScrollViewer Padding="{TemplateBinding Padding}"
+                                      VerticalScrollBarVisibility="Visible">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>

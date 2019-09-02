@@ -6,6 +6,7 @@
         xmlns:utilities="clr-namespace:iTunesLyricOverlay.Utilities"
         xmlns:extended="clr-namespace:iTunesLyricOverlay.Windows.Extended"
         mc:Ignorable="d"
+        ShowInTaskbar="False"
         Title="저장된 가사 목록"
         Height="500"
         Width="350"

@@ -123,11 +123,11 @@
             </TextBlock>
 
             <ItemsControl x:Name="ctlItemsControl"
+                          Style="{StaticResource ItemsControlWithVirtualizingStackPanel}"
                           Visibility="{Binding State, Converter={StaticResource LyricStateToVisibility}, ConverterParameter={x:Static local:LyricState.Success}}"
                           ItemsSource="{Binding LinesGroup}"
                           Focusable="False"
                           HorizontalContentAlignment="Center"
-                          ScrollViewer.ScrollChanged="CtlItemsControl_ScrollChanged"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ItemsControl.ContextMenu>
                     <ContextMenu>
@@ -136,22 +136,11 @@
                                   IsChecked="{Binding MainWindow_AutoScroll, Source={x:Static local:Config.Instance}}" />
 
                         <Separator />
-                        
+
                         <MenuItem Header="아이튠즈 보관함에 적용"
                                   Click="ctlMenuSetTrackLyric_Click" />
                     </ContextMenu>
                 </ItemsControl.ContextMenu>
-                
-                <ItemsControl.Template>
-                    <ControlTemplate>
-                        <ScrollViewer Padding="{TemplateBinding Padding}"
-                                      PreviewMouseWheel="ctlItemsControl_PreviewMouseWheel"
-                                      PreviewKeyDown="ctlItemsControl_PreviewKeyDown"
-                                      VerticalScrollBarVisibility="Visible">
-                            <ItemsPresenter />
-                        </ScrollViewer>
-                    </ControlTemplate>
-                </ItemsControl.Template>
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type models:LyricLineGroupModel}">

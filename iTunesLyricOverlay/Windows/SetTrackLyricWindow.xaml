@@ -43,6 +43,7 @@
                   Margin="0 0 0 3">
             <ItemsControl x:Name="ctlPreview"
                           Focusable="False"
+                          Style="{StaticResource ItemsControlWithVirtualizingStackPanel}"
                           HorizontalContentAlignment="Center"
                           VirtualizingStackPanel.IsVirtualizing="True">
                 <ItemsControl.Template>

@@ -83,16 +83,7 @@
                   x:Name="ctlSearchResults"
                   Margin="0 3 0 0"
                   HorizontalContentAlignment="Stretch"
-                  SelectionMode="Single"
-                  ScrollViewer.VerticalScrollBarVisibility="Visible"
-                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                  VirtualizingStackPanel.IsVirtualizing="True"
-                  VirtualizingStackPanel.VirtualizationMode="Recycling">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel />
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
+                  SelectionMode="Single">
 
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">

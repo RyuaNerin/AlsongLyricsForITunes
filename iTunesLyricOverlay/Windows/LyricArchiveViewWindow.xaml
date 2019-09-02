@@ -72,16 +72,8 @@
             <ItemsControl x:Name="ctlItemsControl"
                           Focusable="False"
                           HorizontalContentAlignment="Center"
+                          Style="{StaticResource ItemsControlWithVirtualizingStackPanel}"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                <ItemsControl.Template>
-                    <ControlTemplate>
-                        <ScrollViewer Padding="{TemplateBinding Padding}"
-                                      VerticalScrollBarVisibility="Visible">
-                            <ItemsPresenter />
-                        </ScrollViewer>
-                    </ControlTemplate>
-                </ItemsControl.Template>
-            
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type models:LyricLineGroupModel}">
                         <ItemsControl ItemsSource="{Binding}"
