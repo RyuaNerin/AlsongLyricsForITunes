@@ -1,7 +1,10 @@
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using iTunesLyricOverlay.Database;
 
 namespace iTunesLyricOverlay.Windows
@@ -32,7 +35,12 @@ namespace iTunesLyricOverlay.Windows
 
         private void UpdateList()
         {
-            this.ctlList.ItemsSource = App.LyricCollection.FindAll().ToArray();
+            var lst = App.LyricCollection.FindAll().ToArray();
+
+            foreach (var item in lst)
+                Console.WriteLine(item.ToString());
+
+            this.ctlList.ItemsSource = lst;
         }
 
         private void cmdOpen_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -45,7 +53,14 @@ namespace iTunesLyricOverlay.Windows
         }
         private void CtlList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            this.OpenPreview((LyricArchive)this.ctlList.SelectedItem);
+            var dep = (DependencyObject)e.OriginalSource;
+            ListViewItem item = null;
+
+            while (dep != null && item == null)
+                item = (dep = VisualTreeHelper.GetParent(dep)) as ListViewItem;
+
+            if (item != null)
+                this.OpenPreview((LyricArchive)item.Content);
         }
         private void OpenPreview(LyricArchive archive)
         {
