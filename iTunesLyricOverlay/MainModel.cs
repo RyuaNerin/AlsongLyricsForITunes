@@ -44,6 +44,8 @@ namespace iTunesLyricOverlay
 
     public class MainModel : INotifyPropertyChanged
     {
+        private readonly static TimeSpan SeekTimeError = TimeSpan.FromMilliseconds(50);
+
         public static MainModel Instance { get; } = new MainModel();
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -385,7 +387,7 @@ namespace iTunesLyricOverlay
             int index = 0;
             while (index + 1 < this.LinesGroup.Count)
             {
-                if (pos < this.LinesGroup[index + 1].Time)
+                if (pos < this.LinesGroup[index + 1].Time - SeekTimeError)
                     break;
                 index++;
             }
