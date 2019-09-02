@@ -68,30 +68,60 @@
              
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="작곡가"
-                                    Width="70"
-                                    DisplayMemberBinding="{Binding Artist}"
-                                    utilities:GridViewSort.PropertyName="Artist" />
-
                     <GridViewColumn Header="제목"
                                     Width="100"
-                                    DisplayMemberBinding="{Binding Title}"
-                                    utilities:GridViewSort.PropertyName="Title" />
+                                    utilities:GridViewSort.PropertyName="Title">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextTrimming="CharacterEllipsis"
+                                           Text="{Binding Title}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    
+                    <GridViewColumn Header="작곡가"
+                                    Width="70"
+                                    utilities:GridViewSort.PropertyName="Artist">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextTrimming="CharacterEllipsis"
+                                           Text="{Binding Artist}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
 
                     <GridViewColumn Header="앨범"
                                     Width="100"
-                                    DisplayMemberBinding="{Binding Album}"
-                                    utilities:GridViewSort.PropertyName="Album" />
+                                    utilities:GridViewSort.PropertyName="Album">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextTrimming="CharacterEllipsis"
+                                           Text="{Binding Album}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
 
                     <GridViewColumn Header="길이"
                                     Width="50"
-                                    DisplayMemberBinding="{Binding DurationStr}"
-                                    utilities:GridViewSort.PropertyName="Duration" />
+                                    utilities:GridViewSort.PropertyName="Duration">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextTrimming="CharacterEllipsis"
+                                           Text="{Binding DurationStr}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
 
                     <GridViewColumn Header="저장된 날"
                                     Width="100"
-                                    DisplayMemberBinding="{Binding CachedStr}"
-                                    utilities:GridViewSort.PropertyName="Cached" />
+                                    utilities:GridViewSort.PropertyName="Cached">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextTrimming="CharacterEllipsis"
+                                           Text="{Binding CachedStr}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
