@@ -11,7 +11,7 @@ namespace iTunesLyricOverlay.Database
     public class LyricArchive
     {
         public static string GetID(IITTrackWrapper track)
-            => $"{track.Artist}|{track.Title}|{track.Album}|{track.Duration}|{track.TrackID}";
+            => $"{track.Artist}|{track.Title}|{track.Album}|{track.Duration}|{track.BitRate}";
 
         public LyricArchive()
         {
@@ -27,6 +27,9 @@ namespace iTunesLyricOverlay.Database
 
             this.Cached   = DateTime.Now;
         }
+
+        public override string ToString()
+            => this.LyricArchiveId;
 
         [BsonIgnore]
         public bool IsInvalid

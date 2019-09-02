@@ -15,7 +15,7 @@ namespace iTunesLyricOverlay.Wrapper
             this.Artist   = track.Artist ?? track.Composer;
             this.Title    = track.Name;
             this.Album    = track.Album;
-            this.TrackID  = track.trackID;
+            this.BitRate  = track.BitRate;
 
             try
             {
@@ -33,7 +33,7 @@ namespace iTunesLyricOverlay.Wrapper
         public string   Title     { get; }
         public string   Album     { get; }
         public string   Location  { get; }
-        public int      TrackID   { get; }
+        public int      BitRate   { get; }
 
         public void SetLyrics(string lyrics)
         {
