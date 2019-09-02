@@ -71,7 +71,7 @@
                     <GridViewColumn Header="작곡가"
                                     Width="70"
                                     DisplayMemberBinding="{Binding Artist}"
-                                    utilities:GridViewSort.PropertyName="TitleWithNo" />
+                                    utilities:GridViewSort.PropertyName="Artist" />
 
                     <GridViewColumn Header="제목"
                                     Width="100"
