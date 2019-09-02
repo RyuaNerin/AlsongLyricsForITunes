@@ -129,6 +129,17 @@ namespace iTunesLyricOverlay
             }
         }
 
+        private bool m_isLinesGroupArchived;
+        public bool IsLinesGroupArchived
+    {
+            get => this.m_isLinesGroupArchived;
+            private set
+            {
+                this.m_isLinesGroupArchived = value;
+                this.OnPropertyChanged();
+            }
+        }
+
         private string m_currentLyricID;
         public string CurrentLyricID
         {
@@ -235,7 +246,7 @@ namespace iTunesLyricOverlay
                     {
                         this.CurrentLyricID = arcCached.LyricID;
 
-                        this.SetLyrics(arcCached.Lyric);
+                        this.SetLyrics(arcCached.Lyric, true);
                         return;
                     }
 
@@ -255,7 +266,7 @@ namespace iTunesLyricOverlay
                         return;
                     }
 
-                    this.SetLyrics(null);
+                    this.SetLyrics(null, false);
                 }
                 catch
                 {
@@ -287,7 +298,7 @@ namespace iTunesLyricOverlay
 
                     App.LyricCollection.Upsert(arc);
 
-                    this.SetLyrics(lyric.Lyric);
+                    this.SetLyrics(lyric.Lyric, false);
                     return;
                 }
 
@@ -296,10 +307,12 @@ namespace iTunesLyricOverlay
         }
 
         private int m_lastFocusedIndex = -1;
-        private void SetLyrics(AlsongLyricLine[] lyric)
+        private void SetLyrics(AlsongLyricLine[] lyric, bool isArchived)
         {
             lock (this.m_currentTrackLock)
             {
+                this.IsLinesGroupArchived = isArchived;
+
                 if (lyric == null)
                 {
                     this.State = LyricState.NotFound;
