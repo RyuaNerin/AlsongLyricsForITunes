@@ -178,8 +178,17 @@ namespace iTunesLyricOverlay.Utilities
 
             public int Compare(object x, object y)
             {
-                var xx = x.GetType().GetProperty(this.m_propertyName).GetValue(x);
-                var yy = y.GetType().GetProperty(this.m_propertyName).GetValue(y);
+                object xx = null;
+                object yy = null;
+
+                try
+                {
+                    xx = x.GetType().GetProperty(this.m_propertyName).GetValue(x);
+                    yy = y.GetType().GetProperty(this.m_propertyName).GetValue(y);
+                }
+                catch
+                {
+                }
 
                 int r;
                 if (xx is string xxx && yy is string yyy)

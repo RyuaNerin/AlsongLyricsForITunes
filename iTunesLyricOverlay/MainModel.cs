@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 using iTunesLib;
 using iTunesLyricOverlay.Alsong;
 using iTunesLyricOverlay.Database;
@@ -21,13 +22,29 @@ namespace iTunesLyricOverlay
         AlsongError = -1,
     }
 
+    /*
+
+        기본적인 함수 흐름
+
+        iTunes => OnPlayerPlayEvent => ITunes_OnPlayerPlayEvent
+
+        1. 저장된 가사가 있음
+            => SetLyrics
+
+        2. 파일로 검색 or 이름으로 검색 성공
+            => SetAlsongLyrics
+                1. 가사 정보 얻어오기 성공
+                    => SetLyrics
+                2. 실패
+                    => State = SetAlsongLyrics
+
+        3. 실패
+            => State = NotFound
+    */
+
     public class MainModel : INotifyPropertyChanged
     {
-        public static MainModel Instance { get; }
-        static MainModel()
-        {
-            Instance = new MainModel();
-        }
+        public static MainModel Instance { get; } = new MainModel();
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string name = "")
@@ -236,7 +253,10 @@ namespace iTunesLyricOverlay
 
                 this.MusicPos = this.ITunes.PlayerPositionMS;
                 this.MusicPosMax = track.Duration * 1000;
+            }
 
+            Task.Run(() =>
+            {
                 try
                 {
                     this.State = LyricState.Searching;
@@ -246,19 +266,19 @@ namespace iTunesLyricOverlay
                     {
                         this.CurrentLyricID = arcCached.LyricID;
 
-                        this.SetLyrics(arcCached.Lyric, true);
+                        this.SetLyrics(track,  arcCached.Lyric, true);
                         return;
                     }
 
                     AlsongLyric[] lyrics;
-                    
+
                     lyrics = AlsongAPI.SearchByFile(track.Location);
                     if (lyrics != null)
                     {
                         this.SetAlsongLyrics(this.m_currentTrack, lyrics[0]);
                         return;
                     }
-                    
+
                     lyrics = AlsongAPI.SearchByText(track.Artist, track.Title, 0);
                     if (lyrics?.Length > 0)
                     {
@@ -266,67 +286,67 @@ namespace iTunesLyricOverlay
                         return;
                     }
 
-                    this.SetLyrics(null, false);
+                    this.SetState(track, LyricState.NotFound);
+                    this.LinesGroup = null;
                 }
                 catch
                 {
                 }
-            }
+            });
         }
 
         public void SetAlsongLyrics(AlsongLyricWrapper lyricWrapper)
         {
             this.SetAlsongLyrics(lyricWrapper.CurrentTrack, lyricWrapper.AlsongLyric);
         }
-
+        
         private void SetAlsongLyrics(IITTrackWrapper track, AlsongLyric lyric)
+        {
+            if (lyric.GetLyrics())
+            {
+                this.CurrentLyricID = lyric.LyricID;
+
+                var arc = new LyricArchive(track)
+                {
+                    Lyric   = lyric.Lyric,
+                    LyricID = lyric.LyricID,
+                };
+
+                App.LyricCollection.Upsert(arc);
+
+                this.SetLyrics(track, lyric.Lyric, false);
+                return;
+            }
+
+            this.SetState(track, LyricState.AlsongError);
+        }
+
+        private void SetState(IITTrackWrapper track, LyricState state)
         {
             lock (this.m_currentTrackLock)
             {
                 if (this.m_currentTrack != track)
                     return;
 
-                if (lyric.GetLyrics())
-                {
-                    this.CurrentLyricID = lyric.LyricID;
-
-                    var arc = new LyricArchive(track)
-                    {
-                        Lyric   = lyric.Lyric,
-                        LyricID = lyric.LyricID,
-                    };
-
-                    App.LyricCollection.Upsert(arc);
-
-                    this.SetLyrics(lyric.Lyric, false);
-                    return;
-                }
-
-                this.State = LyricState.AlsongError;
+                this.State = state;
             }
         }
 
         private int m_lastFocusedIndex = -1;
-        private void SetLyrics(AlsongLyricLine[] lyric, bool isArchived)
+        private void SetLyrics(IITTrackWrapper track, AlsongLyricLine[] lyric, bool isArchived)
         {
             lock (this.m_currentTrackLock)
             {
+                if (this.m_currentTrack != track)
+                    return;
+
                 this.IsLinesGroupArchived = isArchived;
 
-                if (lyric == null)
-                {
-                    this.State = LyricState.NotFound;
-                    this.LinesGroup = null;
-                    return;
-                }
-
-                this.State = LyricState.Success;
+                this.SetState(track, LyricState.Success);
 
                 //////////////////////////////////////////////////
                 
                 this.LinesGroup = new LyricLineGroupCollection(lyric);
-
-                //////////////////////////////////////////////////
 
                 if (this.LinesGroup.Count > 0)
                 {
@@ -344,7 +364,7 @@ namespace iTunesLyricOverlay
                 {
                     var lyricStr = this.LinesGroup.Format(Config.Instance.ApplyLyricsToITunes_WithTime, Config.Instance.ApplyLyricsToITunes_WithBlankLine);
 
-                    this.m_currentTrack.SetLyrics(lyricStr);
+                    track.SetLyrics(lyricStr);
                 }
             }
         }
