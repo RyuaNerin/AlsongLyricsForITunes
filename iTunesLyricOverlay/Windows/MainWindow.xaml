@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:iTunesLyricOverlay"
         xmlns:converters="clr-namespace:iTunesLyricOverlay.Converters"
         xmlns:models="clr-namespace:iTunesLyricOverlay.Models"
+        xmlns:extended="clr-namespace:iTunesLyricOverlay.Windows.Extended"
         mc:Ignorable="d"
         x:Name="window"
         Title="아이튠즈용 알송 가사 오버레이"
@@ -39,7 +40,30 @@
         <converters:BoolToObjectConverter x:Key="TrueToVisible"
                                           WhenTrue="{x:Static Visibility.Visible}"
                                           WhenFalse="{x:Static Visibility.Hidden}" />
+
+        <extended:RoutedUICommand2 x:Key="syncReset"
+                                   Text="가사 싱크 초기화">
+            <extended:KeyGesture2 Key="BrowserForward"
+                                  DisplayString="/" />
+        </extended:RoutedUICommand2>
+        <extended:RoutedUICommand2 x:Key="syncPull"
+                                   Text="가사 0.05 초 당기기">
+            <extended:KeyGesture2 Key="OemComma"
+                                  DisplayString="&lt;" />
+        </extended:RoutedUICommand2>
+
+        <extended:RoutedUICommand2 x:Key="syncPush"
+                                   Text="가사 0.05 초 미루기">
+            <extended:KeyGesture2 Key="OemPeriod"
+                                  DisplayString="&gt;" />
+        </extended:RoutedUICommand2>
     </Window.Resources>
+
+    <Window.CommandBindings>
+        <CommandBinding x:Name="cmdSyncReset" Command="{StaticResource syncReset}" Executed="syncReset_Executed"  />
+        <CommandBinding x:Name="cmdSyncPull"  Command="{StaticResource syncPull}"  Executed="syncPull_Executed"  />
+        <CommandBinding x:Name="cmdSyncPush"  Command="{StaticResource syncPush}"  Executed="syncPush_Executed"    />
+    </Window.CommandBindings>
     
     <Grid Margin="3">
         <Grid.RowDefinitions>
@@ -140,6 +164,12 @@
 
                         <MenuItem Header="아이튠즈 보관함에 적용"
                                   Click="ctlMenuSetTrackLyric_Click" />
+
+                        <Separator />
+
+                        <MenuItem Command="{StaticResource syncReset}" />
+                        <MenuItem Command="{StaticResource syncPull}"  />
+                        <MenuItem Command="{StaticResource syncPush}"  />
                     </ContextMenu>
                 </ItemsControl.ContextMenu>
 
@@ -219,6 +249,11 @@
                     <Path Width="34.8333" Height="34.8333" Canvas.Left="20.5833" Canvas.Top="20.5833" Stretch="Fill" Fill="#FF000000" Data="F1 M 20.5833,20.5833L 55.4167,20.5833L 55.4167,55.4167L 45.9167,55.4167L 45.9167,44.3333L 30.0833,44.3333L 30.0833,55.4167L 20.5833,55.4167L 20.5833,20.5833 Z M 33.25,55.4167L 33.25,50.6667L 39.5833,50.6667L 39.5833,55.4167L 33.25,55.4167 Z M 26.9167,23.75L 26.9167,33.25L 49.0833,33.25L 49.0833,23.75L 26.9167,23.75 Z "/>
                 </Canvas>
             </Viewbox>
+
+            <TextBlock HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom"
+                       Visibility="{Binding State, Converter={StaticResource LyricStateToVisibility}, ConverterParameter={x:Static local:LyricState.Success}}"
+                       Text="{Binding Lyric.SyncStr}" />
         </Grid>
 
         <!-- ==================================================================================================== -->

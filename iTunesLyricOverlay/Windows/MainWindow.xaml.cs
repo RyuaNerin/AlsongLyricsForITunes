@@ -86,5 +86,32 @@ namespace iTunesLyricOverlay.Windows
         {
             this.m_lyricCachedWindow.Show();
         }
+
+        private void Sync_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            Console.WriteLine("Sync_CanExecute");
+            e.CanExecute = MainModel.Instance.Lyric != null;
+        }
+
+        private void syncReset_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var lyric = MainModel.Instance.Lyric;
+            if (lyric != null)
+                lyric.Sync = TimeSpan.Zero;
+        }
+
+        private void syncPull_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var lyric = MainModel.Instance.Lyric;
+            if (lyric != null)
+                lyric.Sync -= TimeSpan.FromMilliseconds(50);
+        }
+
+        private void syncPush_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var lyric = MainModel.Instance.Lyric;
+            if (lyric != null)
+                lyric.Sync += TimeSpan.FromMilliseconds(50);
+        }
     }
 }
