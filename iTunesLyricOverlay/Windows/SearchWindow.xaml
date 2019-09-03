@@ -94,16 +94,16 @@
                             <DataTrigger.Binding>
                                 <MultiBinding Converter="{StaticResource SameToTrue}">
                                     <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}"
-                                             Path="DataContext.CurrentLyricID" />
+                                             Path="DataContext.Lyric.LyricID" />
                                     <Binding Path="AlsongLyric.LyricID" />
                                 </MultiBinding>
                             </DataTrigger.Binding>
 
-                            <Setter Property="Background" Value="#ffc5e7ff" />
+                            <Setter Property="FontWeight" Value="Bold" />
                         </DataTrigger>
 
                         <DataTrigger Binding="{Binding FoundByFile}" Value="True">
-                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="FontStyle" Value="Italic" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

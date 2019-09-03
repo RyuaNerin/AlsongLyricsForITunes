@@ -126,7 +126,7 @@
             <ItemsControl x:Name="ctlItemsControl"
                           Style="{StaticResource ItemsControlWithVirtualizingStackPanel}"
                           Visibility="{Binding State, Converter={StaticResource LyricStateToVisibility}, ConverterParameter={x:Static local:LyricState.Success}}"
-                          ItemsSource="{Binding LinesGroup}"
+                          ItemsSource="{Binding Lyric.LinesGroup}"
                           Focusable="False"
                           HorizontalContentAlignment="Center"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled">
@@ -208,7 +208,7 @@
                                 <Setter Property="Visibility" Value="Hidden" />
                             </DataTrigger>
 
-                            <DataTrigger Binding="{Binding IsLinesGroupArchived}" Value="False">
+                            <DataTrigger Binding="{Binding Lyric.IsArchived}" Value="False">
                                 <Setter Property="Visibility" Value="Hidden" />
                             </DataTrigger>
                         </Style.Triggers>

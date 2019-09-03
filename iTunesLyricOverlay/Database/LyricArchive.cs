@@ -52,6 +52,8 @@ namespace iTunesLyricOverlay.Database
 
         public string   LyricID         { get; set; }
 
+        public TimeSpan Sync            { get; set; }
+
         [BsonIgnore] public string DurationStr  => string.Format("{0:#0}:{1:00}", this.Duration / 60, this.Duration % 60);
         [BsonIgnore] public string CachedStr    => this.Cached.ToString("yyyy-MM-dd HH:mm:ss");
 

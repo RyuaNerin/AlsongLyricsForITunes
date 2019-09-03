@@ -69,7 +69,7 @@ namespace iTunesLyricOverlay.Windows
 
         private void ctlMenuSetTrackLyric_Click(object sender, RoutedEventArgs e)
         {
-            new SetTrackLyricWindow(MainModel.Instance.CurrentTrack, MainModel.Instance.LinesGroup).ShowDialog();
+            new SetTrackLyricWindow(MainModel.Instance.CurrentTrack, MainModel.Instance.Lyric.LinesGroup).ShowDialog();
         }
 
         private void ctlOpenOverlay_Click(object sender, RoutedEventArgs e)

@@ -137,35 +137,13 @@ namespace iTunesLyricOverlay
             }
         }
 
-        private LyricLineGroupCollection m_linesGroup;
-        public LyricLineGroupCollection LinesGroup
+        private LyricArchiveWrapper m_linesGroup;
+        public LyricArchiveWrapper Lyric
         {
             get => this.m_linesGroup;
             private set
             {
                 this.m_linesGroup = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        private bool m_isLinesGroupArchived;
-        public bool IsLinesGroupArchived
-    {
-            get => this.m_isLinesGroupArchived;
-            private set
-            {
-                this.m_isLinesGroupArchived = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        private string m_currentLyricID;
-        public string CurrentLyricID
-        {
-            get => this.m_currentLyricID;
-            private set
-            {
-                this.m_currentLyricID = value;
                 this.OnPropertyChanged();
             }
         }
@@ -263,33 +241,15 @@ namespace iTunesLyricOverlay
                 {
                     this.State = LyricState.Searching;
 
-                    var arcCached = App.LyricCollection.FindById(LyricArchive.GetID(track));
-                    if (arcCached != null && arcCached.Lyric != null)
+                    var archive = LyricArchiveWrapper.GetLyrics(track);
+                    if (archive != null)
                     {
-                        this.CurrentLyricID = arcCached.LyricID;
-
-                        this.SetLyrics(track,  arcCached.Lyric, true);
-                        return;
-                    }
-
-                    AlsongLyric[] lyrics;
-
-                    lyrics = AlsongAPI.SearchByFile(track.Location);
-                    if (lyrics != null)
-                    {
-                        this.SetAlsongLyrics(this.m_currentTrack, lyrics[0]);
-                        return;
-                    }
-
-                    lyrics = AlsongAPI.SearchByText(track.Artist, track.Title, 0);
-                    if (lyrics?.Length > 0)
-                    {
-                        this.SetAlsongLyrics(this.m_currentTrack, lyrics[0]);
+                        this.SetLyricWrapper(archive);
                         return;
                     }
 
                     this.SetState(track, LyricState.NotFound);
-                    this.LinesGroup = null;
+                    this.Lyric = null;
                 }
                 catch
                 {
@@ -299,28 +259,13 @@ namespace iTunesLyricOverlay
 
         public void SetAlsongLyrics(AlsongLyricWrapper lyricWrapper)
         {
-            this.SetAlsongLyrics(lyricWrapper.CurrentTrack, lyricWrapper.AlsongLyric);
-        }
-        
-        private void SetAlsongLyrics(IITTrackWrapper track, AlsongLyric lyric)
-        {
-            if (lyric.GetLyrics())
+            if (!LyricArchiveWrapper.TryWrap(lyricWrapper.CurrentTrack, lyricWrapper.AlsongLyric, out var archive))
             {
-                this.CurrentLyricID = lyric.LyricID;
-
-                var arc = new LyricArchive(track)
-                {
-                    Lyric   = lyric.Lyric,
-                    LyricID = lyric.LyricID,
-                };
-
-                App.LyricCollection.Upsert(arc);
-
-                this.SetLyrics(track, lyric.Lyric, false);
+                this.SetState(lyricWrapper.CurrentTrack, LyricState.AlsongError);
                 return;
             }
 
-            this.SetState(track, LyricState.AlsongError);
+            this.SetLyricWrapper(archive);
         }
 
         private void SetState(IITTrackWrapper track, LyricState state)
@@ -335,27 +280,25 @@ namespace iTunesLyricOverlay
         }
 
         private int m_lastFocusedIndex = -1;
-        private void SetLyrics(IITTrackWrapper track, AlsongLyricLine[] lyric, bool isArchived)
+        private void SetLyricWrapper(LyricArchiveWrapper wrapper)
         {
             lock (this.m_currentTrackLock)
             {
-                if (this.m_currentTrack != track)
+                if (this.m_currentTrack != wrapper.Track)
                     return;
 
-                this.IsLinesGroupArchived = isArchived;
-
-                this.SetState(track, LyricState.Success);
+                this.State = LyricState.Success;
 
                 //////////////////////////////////////////////////
                 
-                this.LinesGroup = new LyricLineGroupCollection(lyric);
+                this.Lyric = wrapper;
 
-                if (this.LinesGroup.Count > 0)
+                if (this.Lyric.LinesGroup.Count > 0)
                 {
-                    this.LinesGroup[0].Focused = true;
+                    this.Lyric.LinesGroup[0].Focused = true;
                     this.m_lastFocusedIndex = 0;
 
-                    this.OnLyricsFocusChanged?.Invoke(this.LinesGroup[0]);
+                    this.OnLyricsFocusChanged?.Invoke(this.Lyric.LinesGroup[0]);
                 }
                 else
                 {
@@ -364,9 +307,9 @@ namespace iTunesLyricOverlay
 
                 if (Config.Instance.ApplyLyricsToITunes)
                 {
-                    var lyricStr = this.LinesGroup.Format(Config.Instance.ApplyLyricsToITunes_WithTime, Config.Instance.ApplyLyricsToITunes_WithBlankLine);
+                    var lyricStr = this.Lyric.LinesGroup.Format(Config.Instance.ApplyLyricsToITunes_WithTime, Config.Instance.ApplyLyricsToITunes_WithBlankLine);
 
-                    track.SetLyrics(lyricStr);
+                    wrapper.Track.SetLyrics(lyricStr);
                 }
             }
         }
@@ -385,21 +328,21 @@ namespace iTunesLyricOverlay
                 return;
 
             int index = 0;
-            while (index + 1 < this.LinesGroup.Count)
+            while (index + 1 < this.Lyric.LinesGroup.Count)
             {
-                if (pos < this.LinesGroup[index + 1].Time - SeekTimeError)
+                if (pos < this.Lyric.LinesGroup[index + 1].Time - SeekTimeError)
                     break;
                 index++;
             }
 
             if (this.m_lastFocusedIndex != index)
             {
-                this.LinesGroup[this.m_lastFocusedIndex].Focused = false;
-                this.LinesGroup[index].Focused = true;
+                this.Lyric.LinesGroup[this.m_lastFocusedIndex].Focused = false;
+                this.Lyric.LinesGroup[index].Focused = true;
 
                 this.m_lastFocusedIndex = index;
 
-                this.OnLyricsFocusChanged?.Invoke(this.LinesGroup[index]);
+                this.OnLyricsFocusChanged?.Invoke(this.Lyric.LinesGroup[index]);
             }
         }
     }
