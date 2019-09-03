@@ -31,6 +31,15 @@ namespace iTunesLyricOverlay.Models
             if (g.Count > 0)
                 groups.Add(g);
 
+            // 모두 공란인 그룹 비우는 작업
+            for (int i = 0; i < groups.Count; i++)
+            {
+                if (groups[i].All(e => string.IsNullOrWhiteSpace(e.Line.Text)))
+                {
+                    groups[i].RemoveRange(1, groups[i].Count - 1);
+                }
+            }
+
             if (groups.Count == 1)
             {
                 groups.Clear();
