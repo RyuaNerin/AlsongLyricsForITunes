@@ -1,7 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -24,7 +23,6 @@ namespace iTunesLyricOverlay.Windows.Extended
 
         private void KeyGestures_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            Debug.WriteLine("KeyGestures_CollectionChanged");
             this.Update();
 
             if (e.OldItems != null)
@@ -38,7 +36,6 @@ namespace iTunesLyricOverlay.Windows.Extended
 
         private void Item_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Debug.WriteLine("Item_PropertyChanged");
             this.Update();
         }
 
@@ -49,7 +46,7 @@ namespace iTunesLyricOverlay.Windows.Extended
             {
                 this.InputGestures.Clear();
 
-                foreach (var item in this.KeyGestures.Select(le => le.KeyGesture))
+                foreach (var item in this.KeyGestures.Select(le => le.KeyGesture).Where(le => le != null))
                     this.InputGestures.Add(item);
             }
         }
@@ -98,13 +95,13 @@ namespace iTunesLyricOverlay.Windows.Extended
         {
             get
             {
-                if (this.Modifier == ModifierKeys.None)
-                    return new KeyGesture(this.Key, this.Modifier);
-
                 if (this.DisplayString != null)
                     return new KeyGesture(this.Key, this.Modifier, this.DisplayString);
 
-                if (this.Key == Key.None)
+                if (this.Modifier != ModifierKeys.None)
+                    return new KeyGesture(this.Key, this.Modifier);
+
+                if (this.Key != Key.None)
                     return new KeyGesture(this.Key);
 
                 return null;
