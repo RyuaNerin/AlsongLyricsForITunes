@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Windows.Data;
 
@@ -12,7 +12,7 @@ namespace iTunesLyricOverlay.Converters
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             for (int i = 0; i < values.Length - 1; ++i)
-                if (values[i] != values[i + 1])
+                if (!values[i].Equals(values[i + 1]))
                     return this.OnFalse;
 
             return this.OnTrue;
