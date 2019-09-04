@@ -42,8 +42,8 @@ namespace iTunesLyricOverlay.Wrapper
                 Lyric   = lyric.Lyric,
             };
 
-            var w = new LyricArchiveWrapper(track, arc, false);
-            w.Save();
+            archive = new LyricArchiveWrapper(track, arc, false);
+            archive.Save();
 
             return true;
         }
@@ -61,7 +61,7 @@ namespace iTunesLyricOverlay.Wrapper
 
         public void Save()
         {
-            App.LyricCollection.Upsert(this.m_archive);
+            App.LyricCollection.Update(this.m_archive);
         }
 
         public IITTrackWrapper Track { get; }
@@ -79,6 +79,22 @@ namespace iTunesLyricOverlay.Wrapper
             {
                 this.m_archive.Sync = value;
                 this.OnPropertyChanged();
+                this.OnPropertyChanged("SyncStr");
+            }
+        }
+
+        public string SyncStr
+        {
+            get
+            {
+                var v = this.Sync;
+                if (v == TimeSpan.Zero)
+                    return null;
+
+                if (v < TimeSpan.Zero)
+                    return v.ToString(@"\<\ mm\:ss\.ff");
+                else
+                    return v.ToString(@"mm\:ss\.ff\ \>");
             }
         }
 

@@ -25,7 +25,7 @@ namespace iTunesLyricOverlay
             Config.Load(m_database);
 
             LyricCollection = m_database.GetCollection<LyricArchive>("lyrics");
-            LyricCollection.EnsureIndex(le => le.LyricArchiveId);
+            LyricCollection.EnsureIndex(le => le.LyricArchiveId, true);
 
             foreach (var itemInvaild in LyricCollection.FindAll().Where(le => le.IsInvalid).ToArray())
             {

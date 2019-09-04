@@ -84,6 +84,7 @@ namespace iTunesLyricOverlay
 
         public void Deinit()
         {
+            this.Lyric?.Save();
             this.ITunes.Deinit();
 
             this.m_running = false;
@@ -290,7 +291,8 @@ namespace iTunesLyricOverlay
                 this.State = LyricState.Success;
 
                 //////////////////////////////////////////////////
-                
+
+                this.Lyric?.Save();
                 this.Lyric = wrapper;
 
                 if (this.Lyric.LinesGroup.Count > 0)
@@ -330,7 +332,7 @@ namespace iTunesLyricOverlay
             int index = 0;
             while (index + 1 < this.Lyric.LinesGroup.Count)
             {
-                if (pos < this.Lyric.LinesGroup[index + 1].Time - SeekTimeError)
+                if (pos < this.Lyric.LinesGroup[index + 1].Time - SeekTimeError + this.Lyric.Sync)
                     break;
                 index++;
             }
