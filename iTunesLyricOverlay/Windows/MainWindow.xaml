@@ -227,7 +227,7 @@
                 <Viewbox.Style>
                     <Style TargetType="Viewbox">
                         <Style.Triggers>
-                            <DataTrigger Value="True">
+                            <DataTrigger Value="False">
                                 <DataTrigger.Binding>
                                     <MultiBinding Converter="{StaticResource ObjectComparer}">
                                         <Binding Path="State" />
