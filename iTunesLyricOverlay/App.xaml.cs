@@ -11,7 +11,7 @@ namespace iTunesLyricOverlay
     public partial class App : Application
     {
         private static LiteDatabase m_database;
-        public static LiteCollection<LyricArchive> LyricCollection;
+        public static CachedCollection<LyricArchive> LyricCollection;
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
@@ -24,8 +24,9 @@ namespace iTunesLyricOverlay
 
             Config.Load(m_database);
 
-            LyricCollection = m_database.GetCollection<LyricArchive>("lyrics");
-            LyricCollection.EnsureIndex(le => le.LyricArchiveId, true);
+            LyricCollection = new CachedCollection<LyricArchive>(
+                m_database.GetCollection<LyricArchive>("lyrics"),
+                le => le.LyricArchiveId);
 
             foreach (var itemInvaild in LyricCollection.FindAll().Where(le => le.IsInvalid).ToArray())
             {

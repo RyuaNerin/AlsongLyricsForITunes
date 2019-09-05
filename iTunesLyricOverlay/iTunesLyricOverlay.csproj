@@ -93,6 +93,7 @@
     <Compile Include="Converters\FontFamilyConverter.cs" />
     <Compile Include="Converters\ObjectCompareConverter.cs" />
     <Compile Include="Converters\IntValueParamterComparer.cs" />
+    <Compile Include="Database\LiteCollectionCached.cs" />
     <Compile Include="Models\LyricLineGroupCollection.cs" />
     <Compile Include="Utilities\GridViewSorter.cs" />
     <Compile Include="Utilities\ItemsControlExtensions.cs" />

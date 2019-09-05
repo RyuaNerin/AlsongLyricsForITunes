@@ -61,7 +61,7 @@ namespace iTunesLyricOverlay.Wrapper
 
         public void Save()
         {
-            App.LyricCollection.Update(this.m_archive);
+            App.LyricCollection.Upsert(this.m_archive);
         }
 
         public IITTrackWrapper Track { get; }

@@ -4,8 +4,6 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using iTunesLib;
-using iTunesLyricOverlay.Alsong;
-using iTunesLyricOverlay.Database;
 using iTunesLyricOverlay.Models;
 using iTunesLyricOverlay.Wrapper;
 
