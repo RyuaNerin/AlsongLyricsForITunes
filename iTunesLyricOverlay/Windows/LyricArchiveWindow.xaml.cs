@@ -14,6 +14,13 @@ namespace iTunesLyricOverlay.Windows
         public LyricArchiveWindow()
         {
             this.InitializeComponent();
+
+            App.LyricCollection.CollectionUpdated += this.LyricCollection_CollectionUpdated;
+        }
+
+        private void LyricCollection_CollectionUpdated()
+        {
+            this.Dispatcher.BeginInvoke(new Action(this.UpdateList));
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -26,11 +33,6 @@ namespace iTunesLyricOverlay.Windows
         {
             this.UpdateList();
             base.Show();
-        }
-
-        private void ctlRefresh_Click(object sender, RoutedEventArgs e)
-        {
-            this.UpdateList();
         }
 
         private void UpdateList()
@@ -80,8 +82,6 @@ namespace iTunesLyricOverlay.Windows
 
             foreach (var item in this.ctlList.SelectedItems)
                 App.LyricCollection.Delete(((LyricArchive)item).LyricArchiveId);
-
-            this.UpdateList();
         }
     }
 }

@@ -8,6 +8,8 @@ namespace iTunesLyricOverlay.Database
     public sealed class CachedCollection<T>
         where T : class
     {
+        public event Action CollectionUpdated;
+
         private readonly LiteCollection<T> m_collection;
         private readonly Func<T, BsonValue> m_getId;
 
@@ -38,11 +40,15 @@ namespace iTunesLyricOverlay.Database
                 this.m_cache[id].SetTarget(item);
             else
                 this.m_cache.Add(id, new WeakReference<T>(item));
+
+            this.CollectionUpdated?.Invoke();
         }
         
         private void DelCache(BsonValue id)
         {
             this.m_cache.Remove(id);
+
+            this.CollectionUpdated?.Invoke();
         }
 
         public void Upsert(T item)

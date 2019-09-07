@@ -9,6 +9,7 @@
         xmlns:extended="clr-namespace:iTunesLyricOverlay.Windows.Extended"
         mc:Ignorable="d"
         x:Name="window"
+        WindowStartupLocation="CenterOwner"
         Title="아이튠즈용 알송 가사 오버레이"
         Loaded="Window_Loaded"
         Closed="Window_Closed"
