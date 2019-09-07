@@ -15,14 +15,20 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="ctlNowPlaying"
+        <TextBlock Grid.Row="0"
+                   x:Name="ctlNowPlayingTitle"
                    TextAlignment="Center"/>
 
-        <GroupBox Grid.Row="1"
+        <TextBlock Grid.Row="1"
+                   x:Name="ctlNowPlayingAlbum"
+                   TextAlignment="Center"/>
+
+        <GroupBox Grid.Row="2"
                   Header="가사 형식 지정"
                   Margin="0 3 0 3">
             <StackPanel>
@@ -38,7 +44,7 @@
             </StackPanel>
         </GroupBox>
 
-        <GroupBox Grid.Row="2"
+        <GroupBox Grid.Row="3"
                   Header="가사 미리보기"
                   Margin="0 0 0 3">
             <ItemsControl x:Name="ctlPreview"
@@ -73,7 +79,7 @@
             </ItemsControl>
         </GroupBox>
 
-        <Button Grid.Row="3"
+        <Button Grid.Row="4"
                 x:Name="ctlApply"
                 Content="아이튠즈 보관함에 적용"
                 Padding="5"

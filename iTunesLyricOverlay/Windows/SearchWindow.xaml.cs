@@ -50,7 +50,8 @@ namespace iTunesLyricOverlay.Windows
 
             this.m_searchResults.Clear();
             this.m_currentTrack = track;
-            this.ctlNowPlaying.Text = MainModel.Instance.CurrentTrack?.NowPlaying;
+            this.ctlNowPlayingTitle .Text = MainModel.Instance.CurrentTrack?.Title;
+            this.ctlNowPlayingArtist.Text = MainModel.Instance.CurrentTrack?.ArtistAndAlbum;
 
             if (track == null)
             {

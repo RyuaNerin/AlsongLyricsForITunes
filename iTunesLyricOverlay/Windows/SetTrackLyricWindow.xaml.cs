@@ -18,7 +18,8 @@ namespace iTunesLyricOverlay.Windows
             this.m_track = track;
             this.m_lyricGroup = lyric;
 
-            this.ctlNowPlaying.Text = track.NowPlaying;
+            this.ctlNowPlayingTitle.Text = track.Title;
+            this.ctlNowPlayingAlbum.Text = track.ArtistAndAlbum;
 
             this.CheckBox_IsCheckedChanged(null, null);
 

@@ -49,6 +49,7 @@
             
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
                 <RowDefinition Height="3" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="3" />
@@ -63,14 +64,15 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Now Playing" />
-            <TextBlock Grid.Row="0" Grid.Column="2" x:Name="ctlNowPlaying" />
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Text="Now Playing" />
+            <TextBlock Grid.Row="0" Grid.Column="2" x:Name="ctlNowPlayingTitle" />
+            <TextBlock Grid.Row="1" Grid.Column="2" x:Name="ctlNowPlayingArtist" />
             
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="Artist" HorizontalAlignment="Right" />
-            <TextBlock Grid.Row="4" Grid.Column="0" Text="Title"  HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Artist" HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="5" Grid.Column="0" Text="Title"  HorizontalAlignment="Right" />
 
-            <TextBox Grid.Row="2" Grid.Column="2" x:Name="ctlSearchArtist" KeyDown="CtlSearchTextBox_KeyDown" />
-            <TextBox Grid.Row="4" Grid.Column="2" x:Name="ctlSearchTitle"  KeyDown="CtlSearchTextBox_KeyDown" />
+            <TextBox Grid.Row="3" Grid.Column="2" x:Name="ctlSearchArtist" KeyDown="CtlSearchTextBox_KeyDown" />
+            <TextBox Grid.Row="5" Grid.Column="2" x:Name="ctlSearchTitle"  KeyDown="CtlSearchTextBox_KeyDown" />
         </Grid>
 
         <Button Grid.Row="2"

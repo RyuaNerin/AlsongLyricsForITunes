@@ -46,6 +46,6 @@ namespace iTunesLyricOverlay.Wrapper
             }
         }
 
-        public string NowPlaying => $"{this.Artist} - {this.Title}";
+        public string ArtistAndAlbum => string.IsNullOrWhiteSpace(this.Album) ? this.Artist : $"{this.Artist} - {this.Album}";
     }
 }
