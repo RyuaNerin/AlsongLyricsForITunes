@@ -50,13 +50,19 @@ namespace iTunesLyricOverlay.Windows
             this.m_control.Top  = this.Top - this.m_control.Height;
         }
 
+        private volatile bool m_controlSizeChanged = true;
         private void Control_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            this.m_control.Left = this.Left + this.Width - this.m_control.Width;
-            this.m_control.Top = this.Top - this.m_control.Height;
+            this.m_controlSizeChanged = true;
+            this.m_control.Left = this.Left + this.Width - e.NewSize.Width;
+            this.m_control.Top  = this.Top - e.NewSize.Height;
+            this.m_controlSizeChanged = false;
         }
         private void Control_LocationChanged(object sender, EventArgs e)
         {
+            if (this.m_controlSizeChanged)
+                return;
+            
             this.Left = this.m_control.Left + this.m_control.Width  - this.Width;
             this.Top  = this.m_control.Top + this.m_control.Height;
         }
