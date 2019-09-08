@@ -26,7 +26,6 @@ namespace iTunesLyricOverlay.Windows
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.m_searchWindow     .Owner = this;
-            this.m_overlayWindow    .Owner = this;
             this.m_configWindow     .Owner = this;
             this.m_lyricCachedWindow.Owner = this;
 
