@@ -265,6 +265,7 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0"
@@ -295,7 +296,7 @@
                 </ProgressBar.Template>
             </ProgressBar>
 
-            <TextBlock Grid.Row="1"
+            <TextBlock Grid.Row="2"
                        TextAlignment="Center"
                        HorizontalAlignment="Stretch">
                 <TextBlock.Resources>
