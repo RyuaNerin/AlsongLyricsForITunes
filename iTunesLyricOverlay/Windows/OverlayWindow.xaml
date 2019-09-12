@@ -34,6 +34,8 @@
                                           WhenFalse="{x:Static FontWeights.Normal}" />
         
         <converters:FontFamilyConverter x:Key="FontFamilyConverter" />
+
+        <converters:LyricStateToVisibility x:Key="LyricStateToVisibility" />
     </Window.Resources>
     
     <Border CornerRadius="10"
@@ -43,7 +45,8 @@
                           HorizontalAlignment="Stretch"
                           VerticalAlignment="Center"
                           HorizontalContentAlignment="Center"
-                          VerticalContentAlignment="Center">
+                          VerticalContentAlignment="Center"
+                          Visibility="{Binding State, Converter={StaticResource LyricStateToVisibility}, ConverterParameter={x:Static local:LyricState.Success}}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type models:LyricLineModel}">
                         <Viewbox Stretch="Uniform"
